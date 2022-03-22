@@ -7,10 +7,10 @@ import images from '../../../constant/images';
 const ImageBanner = () => {
   return (
     <View style={styles.wrapperImage}>
-      <Image
+      {/* <Image
         width={Dimensions.get('window').width}
         source={images.bannerLogin}
-      />
+      /> */}
       <View style={styles.wrapperLogo}>
         <Image source={images.logoVnua} width={120} />
       </View>
@@ -21,12 +21,8 @@ const ImageBanner = () => {
 export default ImageBanner;
 
 const styles = StyleSheet.create({
-  wrapperImage: {
-    position: 'relative',
-  },
+  wrapperImage: {},
   wrapperLogo: {
-    position: 'absolute',
-    bottom: '-10%',
-    right: '36%',
+    alignItems: 'center',
   },
 });

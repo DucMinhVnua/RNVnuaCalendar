@@ -63,8 +63,8 @@ const FormLogin = ({handleLogin}: Props) => {
 
   return (
     <View style={styles.container}>
-      {renderFormJoinNow()}
-      {/* {renderFormLogin()} */}
+      {/* {renderFormJoinNow()} */}
+      {renderFormLogin()}
       <View style={styles.wrapperBtn}>
         <ButtonLogin
           textButton="Tham gia ngay"

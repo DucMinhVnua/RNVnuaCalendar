@@ -1,6 +1,5 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import Image from 'react-native-scalable-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 /* ===== components ===== */
