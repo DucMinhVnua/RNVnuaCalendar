@@ -1,10 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {moderateScale} from 'react-native-size-matters';
 
 /* ===== styles ===== */
 import typos from '../../../assets/styles/textStyles';
 import colors from '../../../assets/styles/colors';
-import {NORMAL_PADDING, scaleModerate} from '../../../assets/styles/scale';
+import {NORMAL_PADDING} from '../../../assets/styles/scale';
 
 const Main = () => {
   return (
@@ -23,7 +24,7 @@ export default Main;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: scaleModerate(20),
+    marginVertical: moderateScale(20),
     alignItems: 'center',
     paddingHorizontal: NORMAL_PADDING,
   },
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   titleNote: {
-    marginTop: scaleModerate(10),
+    marginTop: moderateScale(10),
     ...typos.titleSmall,
     color: colors.description,
   },

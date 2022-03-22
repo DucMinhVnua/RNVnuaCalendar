@@ -1,12 +1,13 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {moderateScale} from 'react-native-size-matters';
 
 /* ===== componets ===== */
 import {ButtonLogin} from '../../../components';
 
 /* ===== styles ===== */
 import colors from '../../../assets/styles/colors';
-import {NORMAL_PADDING, scaleModerate} from '../../../assets/styles/scale';
+import {NORMAL_PADDING} from '../../../assets/styles/scale';
 import {propsGroupButton} from '..';
 
 interface Props {
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: scaleModerate(10),
+    marginBottom: moderateScale(10),
   },
   wrapperBtnFirst: {
     marginBottom: NORMAL_PADDING,

@@ -1,11 +1,9 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Image from 'react-native-scalable-image';
+import {moderateScale, verticalScale} from 'react-native-size-matters';
 
 import images from '../../constant/images';
-
-/* ===== styles ===== */
-import {scaleVertical} from '../../assets/styles/scale';
 
 /* ===== components ===== */
 import Main from './components/main';
@@ -50,9 +48,5 @@ export default WelcomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  image: {
-    width: '100%',
-    height: scaleVertical(300),
   },
 });

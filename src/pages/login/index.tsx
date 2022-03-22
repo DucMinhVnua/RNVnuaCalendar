@@ -4,7 +4,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 /* ===== components ===== */
 import FormLogin from './components/formLogin';
-import ImageBanner from './components/imageBanner';
+import ImageLogo from './components/imageLogo';
 
 const LoginScreen = () => {
   function handleLogin() {
@@ -24,7 +24,7 @@ const LoginScreen = () => {
       contentContainerStyle={{flexGrow: 1}}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        <ImageBanner />
+        <ImageLogo />
         {renderFormLogin()}
       </View>
     </KeyboardAwareScrollView>

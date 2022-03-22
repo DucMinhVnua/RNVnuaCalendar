@@ -2,9 +2,10 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 
 import icons from '../../../constant/icons';
+import {moderateScale} from 'react-native-size-matters';
 
 /* ===== styles ===== */
-import {NORMAL_PADDING, scaleModerate} from '../../../assets/styles/scale';
+import {NORMAL_PADDING} from '../../../assets/styles/scale';
 import typos from '../../../assets/styles/textStyles';
 import colors from '../../../assets/styles/colors';
 import {ButtonLogin} from '../../../components';
@@ -20,7 +21,7 @@ const FormLogin = ({handleLogin}: Props) => {
   function renderFormJoinNow() {
     return (
       <View style={styles.wrapperForm}>
-        <Text style={styles.label}>Nhập mã:</Text>
+        <Text style={styles.label}>Nhập mã</Text>
         <View style={styles.wrapperInput}>
           <View style={styles.wrapperIcon}>
             <icons.UserIcon />
@@ -36,7 +37,7 @@ const FormLogin = ({handleLogin}: Props) => {
     return (
       <View>
         <View style={styles.wrapperForm}>
-          <Text style={styles.label}>Nhập tài khoản:</Text>
+          <Text style={styles.label}>Nhập tài khoản</Text>
           <View style={styles.wrapperInput}>
             <View style={styles.wrapperIcon}>
               <icons.UserIcon />
@@ -45,7 +46,7 @@ const FormLogin = ({handleLogin}: Props) => {
           </View>
         </View>
         <View style={styles.wrapperForm}>
-          <Text style={styles.label}>Nhập mật khảu:</Text>
+          <Text style={styles.label}>Nhập mật khảu</Text>
           <View style={styles.wrapperInput}>
             <View style={styles.wrapperIcon}>
               <icons.LockIcon />
@@ -80,15 +81,16 @@ export default FormLogin;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: scaleModerate(30),
+    marginTop: moderateScale(30),
     padding: NORMAL_PADDING,
     flex: 1,
   },
   wrapperForm: {
-    paddingTop: scaleModerate(10),
+    paddingTop: moderateScale(10),
   },
   label: {
     ...typos.titleSmall,
+    color: colors.description,
   },
   wrapperInput: {
     flexDirection: 'row',

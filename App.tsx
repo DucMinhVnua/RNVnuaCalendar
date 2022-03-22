@@ -8,13 +8,17 @@ enableScreens();
 /* ===== Screen component ===== */
 import LoginScreen from './src/pages/login';
 import WelcomeScreen from './src/pages/welcome';
+import AccountScreen from './src/pages/account';
+import {SupportScreen} from './src/pages/account/scene';
 
 const App = () => {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <LoginScreen />
+      {/* <LoginScreen /> */}
       {/* <WelcomeScreen /> */}
+      {/* <AccountScreen /> */}
+      <SupportScreen />
     </View>
   );
 };
