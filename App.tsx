@@ -9,7 +9,11 @@ enableScreens();
 import LoginScreen from './src/pages/login';
 import WelcomeScreen from './src/pages/welcome';
 import AccountScreen from './src/pages/account';
-import {SupportScreen} from './src/pages/account/scene';
+import {
+  AboutAppScreen,
+  InfoDetailScreen,
+  SupportScreen,
+} from './src/pages/account/scene';
 
 const App = () => {
   return (
@@ -18,7 +22,9 @@ const App = () => {
       {/* <LoginScreen /> */}
       {/* <WelcomeScreen /> */}
       {/* <AccountScreen /> */}
-      <SupportScreen />
+      {/* <SupportScreen /> */}
+      {/* <AboutAppScreen /> */}
+      <InfoDetailScreen />
     </View>
   );
 };

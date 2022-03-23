@@ -1,39 +1,34 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React, {FC} from 'react';
-
-import icons from '../../../../../constant/icons';
-import typos from '../../../../../assets/styles/textStyles';
-import colors from '../../../../../assets/styles/colors';
+import {StyleSheet, Text, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {SvgProps} from 'react-native-svg';
 
+import typos from '../../../../../assets/styles/textStyles';
+import colors from '../../../../../assets/styles/colors';
+
 interface Props {
   label: string;
-  nameContact: string;
-  IconContact: FC<SvgProps>;
+  nameInfo: string;
+  IconInfo: FC<SvgProps>;
 }
 
-const ItemContact = ({
-  IconContact = icons.EmailIcon,
-  label,
-  nameContact,
-}: Props) => {
+const ItemInfo = ({label, IconInfo, nameInfo}: Props) => {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.label}>{label}</Text>
-      <View style={styles.wrapperContact}>
-        <IconContact />
-        <Text style={styles.contact}>{nameContact}</Text>
+      <View style={styles.wrapperInfo}>
+        <IconInfo />
+        <Text style={styles.nameInfo}>{nameInfo}</Text>
       </View>
     </View>
   );
 };
 
-export default ItemContact;
+export default ItemInfo;
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingBottom: moderateScale(7),
+    paddingBottom: moderateScale(5),
     borderBottomColor: colors.border,
     borderBottomWidth: 1,
   },
@@ -41,12 +36,12 @@ const styles = StyleSheet.create({
     ...typos.titleSmall,
     color: colors.description,
   },
-  wrapperContact: {
+  wrapperInfo: {
     flexDirection: 'row',
     marginTop: moderateScale(5),
     alignItems: 'center',
   },
-  contact: {
+  nameInfo: {
     paddingLeft: moderateScale(10),
   },
 });
