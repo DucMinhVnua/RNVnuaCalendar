@@ -6,7 +6,6 @@ import {enableScreens} from 'react-native-screens';
 enableScreens();
 
 /* ===== Screen component ===== */
-import LoginScreen from './src/pages/login';
 import WelcomeScreen from './src/pages/welcome';
 import AccountScreen from './src/pages/account';
 import {
@@ -14,17 +13,19 @@ import {
   InfoDetailScreen,
   SupportScreen,
 } from './src/pages/account/scene';
+import {JoinNowScreen, LoginScreen} from './src/pages/login';
 
 const App = () => {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      {/* <LoginScreen /> */}
       {/* <WelcomeScreen /> */}
       {/* <AccountScreen /> */}
       {/* <SupportScreen /> */}
       {/* <AboutAppScreen /> */}
-      <InfoDetailScreen />
+      {/* <InfoDetailScreen /> */}
+      {/* <JoinNowScreen /> */}
+      <LoginScreen />
     </View>
   );
 };

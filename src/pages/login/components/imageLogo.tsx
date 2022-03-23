@@ -17,7 +17,6 @@ export default ImageLogo;
 
 const styles = StyleSheet.create({
   wrapperLogo: {
-    marginTop: scale(50),
     alignItems: 'center',
   },
 });
