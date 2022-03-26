@@ -14,6 +14,7 @@ import {
   SupportScreen,
 } from './src/pages/account/scene';
 import {JoinNowScreen, LoginScreen} from './src/pages/login';
+import NewsScreen from './src/pages/news';
 
 const App = () => {
   return (
@@ -25,7 +26,8 @@ const App = () => {
       {/* <AboutAppScreen /> */}
       {/* <InfoDetailScreen /> */}
       {/* <JoinNowScreen /> */}
-      <LoginScreen />
+      {/* <LoginScreen /> */}
+      <NewsScreen />
     </View>
   );
 };
