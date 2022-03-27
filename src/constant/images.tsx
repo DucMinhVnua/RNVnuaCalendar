@@ -12,6 +12,9 @@ const bannerAccount = require('../assets/images/banner_account.png');
 const bannerAboutApp = require('../assets/images/banner_about_app.png');
 const bannerInfoDetail = require('../assets/images/banner_info_detail.png');
 
+/* ===== Scene news screen ===== */
+const bannerNews = require('../assets/images/banner_news.png')
+
 const images = {
   welcome,
   logoVnua,
@@ -19,6 +22,7 @@ const images = {
   bannerAccount,
   bannerAboutApp,
   bannerInfoDetail,
+  bannerNews
 };
 
 export default images;
