@@ -15,6 +15,7 @@ import {
 } from './src/pages/account/scene';
 import {JoinNowScreen, LoginScreen} from './src/pages/login';
 import NewsScreen from './src/pages/news';
+import ScheduleScreen from './src/pages/schedule';
 
 const App = () => {
   return (
@@ -27,7 +28,8 @@ const App = () => {
       {/* <InfoDetailScreen /> */}
       {/* <JoinNowScreen /> */}
       {/* <LoginScreen /> */}
-      <NewsScreen />
+      {/* <NewsScreen /> */}
+      <ScheduleScreen />
     </View>
   );
 };

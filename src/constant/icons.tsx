@@ -18,6 +18,9 @@ import CodeStudentIcon from '../assets/icons/msv-gray.svg';
 import CalendarGrayIcon from '../assets/icons/calendar_gray.svg';
 import BookGrayIcon from '../assets/icons/book-gray.svg';
 
+/* ===== Scene schedule screen ===== */
+import ArrowRightScheduleIcon from '../assets/icons/arrow_right_schedule.svg';
+
 const icons = {
   UserIcon,
   LockIcon,
@@ -33,6 +36,7 @@ const icons = {
   CodeStudentIcon,
   CalendarGrayIcon,
   BookGrayIcon,
+  ArrowRightScheduleIcon,
 };
 
 export default icons;
