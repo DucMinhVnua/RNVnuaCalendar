@@ -46,7 +46,7 @@ const Schedule = ({weekDays = [], onBackPress, onNextPress}: Props) => {
                 typos.bodySmall,
                 {
                   color:
-                    getToday() === weekDays[index]
+                    getToday().toString() === weekDays[index].toString()
                       ? colors.buttonBg
                       : colors.bodyText,
                 },
