@@ -15,6 +15,7 @@ const colors = {
   colorFull08: '#91ED63',
   colorFull09: '#338EF8',
   colorFull10: '#F15F5F',
+  colorFull11: '#C1BFBF',
   description: '#777E90',
   greenLight: '#57AC4D',
   line: '#EBEDF1',

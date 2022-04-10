@@ -8,7 +8,7 @@ import {NORMAL_PADDING} from '../../../assets/styles/scale';
 import ItemNews, {PropsOnPress} from './itemNews';
 
 const Main = ({onPress}: PropsOnPress) => {
-  const arrayFake = Array(20).fill(1);
+  const arrayFake = Array(10).fill(1);
 
   function renderNews({item}: any) {
     return (

@@ -33,15 +33,16 @@ export function getListDays(monday: any) {
 
 export function getMonday(dateCurrent: any) {
   return moment(dateCurrent, 'MM/DD/YYYY')
-    .startOf('isoweek')
+    .startOf('isoWeek')
     .utcOffset(0)
-    .set({hour: 0, minute: 0, second: 0, millisecond: 0});
+    .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+    .add(1, 'days');
 }
 
-export function getMondayBeginWeek(dateCurrent: any) {
-  return getMonday(moment(dateCurrent).subtract(7, 'days'));
+export function getMondayBeginWeek(mondayDateCurrent: any) {
+  return getMonday(moment(mondayDateCurrent).subtract(7, 'days')).subtract(1, 'days');
 }
 
-export function getMondayAfterWeek(dateCurrent: any) {
-  return getMonday(moment(dateCurrent).add(7, 'days'));
+export function getMondayAfterWeek(mondayDateCurrent: any) {
+  return getMonday(moment(mondayDateCurrent).add(7, 'days')).subtract(1, 'days');
 }

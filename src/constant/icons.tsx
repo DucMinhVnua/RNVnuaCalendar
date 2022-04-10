@@ -20,23 +20,25 @@ import BookGrayIcon from '../assets/icons/book-gray.svg';
 
 /* ===== Scene schedule screen ===== */
 import ArrowRightScheduleIcon from '../assets/icons/arrow_right_schedule.svg';
+import RoomScheduleIcon from '../assets/icons/lecture-schedule-room.svg'
 
 const icons = {
-  UserIcon,
+  ArrowRightIcon,
+  ArrowRightScheduleIcon,
+  AsyncIcon,
+  BookGrayIcon,
+  CalendarGrayIcon,
+  CodeStudentIcon,
+  DoubleArrowRightIcon,
+  EmailIcon,
   LockIcon,
   PhoneCallingIcon,
-  PythonIcon,
-  VersionIcon,
-  DoubleArrowRightIcon,
-  ArrowRightIcon,
-  AsyncIcon,
-  EmailIcon,
   PhoneIcon,
+  PythonIcon,
+  RoomScheduleIcon,
   UserGrayIcon,
-  CodeStudentIcon,
-  CalendarGrayIcon,
-  BookGrayIcon,
-  ArrowRightScheduleIcon,
+  UserIcon,
+  VersionIcon,
 };
 
 export default icons;

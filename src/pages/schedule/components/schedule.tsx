@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 
 import ButtonIcon from '../../../components/button/buttonIcon';
@@ -13,9 +13,26 @@ interface Props {
   weekDays: any;
   onBackPress(params: any): void;
   onNextPress(params: any): void;
+  onPress(params: any): void;
+  moveDate: Date;
 }
 
-const Schedule = ({weekDays = [], onBackPress, onNextPress}: Props) => {
+const Schedule = ({
+  weekDays = [],
+  onBackPress,
+  onNextPress,
+  onPress,
+  moveDate,
+}: Props) => {
+
+  const backgroundColorActive = {
+    backgroundColor: colors.colorFull09
+  };
+
+  const textColorActive = {
+    color: colors.white
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.wrapperBtnLeft}>
@@ -29,15 +46,17 @@ const Schedule = ({weekDays = [], onBackPress, onNextPress}: Props) => {
           flexDirection: 'row',
         }}>
         {WEEKDAYS.map((item, index) => (
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => onPress(weekDays[index])}
             key={index}
-            style={{
+            style={[{
               flex: 1,
               borderRadius: 8,
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
-            <Text style={[typos.bodySmall, {color: colors.placeholder}]}>
+            }, moveDate?.toString() === weekDays[index].toString() && backgroundColorActive]}>
+            <Text style={[typos.bodySmall, moveDate?.toString() === weekDays[index].toString() ? textColorActive : {color: colors.placeholder}]}>
               {item}
             </Text>
 
@@ -50,10 +69,11 @@ const Schedule = ({weekDays = [], onBackPress, onNextPress}: Props) => {
                       ? colors.buttonBg
                       : colors.bodyText,
                 },
+                moveDate?.toString() === weekDays[index].toString() && textColorActive
               ]}>
               {getValueFromDate(weekDays[index], 'date')}
             </Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
 
