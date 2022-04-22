@@ -13,7 +13,6 @@ const Header = ({
   handleMoveDate,
   moveDate,
 }: any) => {
-  console.log("re-render")
 
   return (
     <View style={styles.container}>

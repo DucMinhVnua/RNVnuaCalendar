@@ -6,24 +6,36 @@ import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 import icons from '../../../constant/icons';
 
-const LectureScheduleItem = () => {
+const LectureScheduleItem = ({item, indexBtnActive}: any) => {
+  console.log(item);
   return (
-    <View style={styles.containerItem}>
-      <View style={styles.wrapperLeft}>
-        <Text style={styles.lesson}>Tiết 1</Text>
-      </View>
-      <View style={styles.wrapperRight}>
-        <View style={styles.wrapperInfo}>
-          <icons.BookGrayIcon />
-          <Text style={styles.content}>Cơ sở dữ liệu</Text>
-        </View>
-        <View style={styles.wrapperInfo}>
-          <icons.RoomScheduleIcon />
-          <Text style={styles.content}>B102</Text>
-        </View>
-      </View>
-      <View style={styles.circle}></View>
-    </View>
+    <>
+      {item.numberLesson &&
+        Array(item.numberLesson)
+          .fill(1)
+          .map((item, index) => {
+            return (
+              <View style={styles.containerItem}>
+                <View style={styles.wrapperLeft}>
+                  <Text style={styles.lesson}>
+                    Tiết {indexBtnActive === 0 ? index + 1 : index + 6}
+                  </Text>
+                </View>
+                <View style={styles.wrapperRight}>
+                  <View style={styles.wrapperInfo}>
+                    <icons.BookGrayIcon />
+                    <Text style={styles.content}>Cơ sở dữ liệu</Text>
+                  </View>
+                  <View style={styles.wrapperInfo}>
+                    <icons.RoomScheduleIcon />
+                    <Text style={styles.content}>B102</Text>
+                  </View>
+                </View>
+                <View style={styles.circle}></View>
+              </View>
+            );
+          })}
+    </>
   );
 };
 
@@ -40,6 +52,7 @@ const styles = StyleSheet.create({
   },
   wrapperLeft: {
     paddingRight: moderateScale(30),
+    minWidth: moderateScale(80),
   },
   lesson: {
     ...typos.titleSmall,

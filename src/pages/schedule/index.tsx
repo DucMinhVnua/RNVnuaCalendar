@@ -15,28 +15,34 @@ import {postAPI} from '../../api/lectureSchedule-api';
 // Components
 import Header from './components/header';
 import Main from './components/main';
-import {getLearnWeeks} from '../../util/schedule';
-
-const cheerio = require('react-native-cheerio');
+import {
+  pushDataExtraction,
+  fetchDataHTML,
+  pushDataMorningAfternoon,
+} from '../../redux/schedule-redux';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
+import {filterMorningAfternoon, filterSubjectsDay} from '../../util/schedule';
 
 const ScheduleScreen = () => {
   // api
-  const [dataApi, setDataApi] = useState();
+  const dispatch = useAppDispatch();
+  const responseHTML = useAppSelector(state => state.schedule.responseHTML);
+  const data = useAppSelector(state => state.schedule.dataExtraction);
 
+  // get data
   useEffect(() => {
     handleGetData();
-
-    getLearnWeeks();
   }, []);
 
-  async function handleGetData() {
+  function handleGetData() {
     const formData = customFormData();
 
-    const response = await getData(formData);
+    const params = {
+      userId: '637747',
+      body: formData,
+    };
 
-    if (response) {
-      dataExtraction(response);
-    }
+    dispatch(fetchDataHTML(params));
   }
 
   function customFormData() {
@@ -53,20 +59,21 @@ const ScheduleScreen = () => {
     return formData;
   }
 
-  async function getData(body: any) {
-    return await postAPI(
-      'default.aspx?page=thoikhoabieu&sta=1&id=637747',
-      body,
-    );
+  useEffect(() => {
+    if (responseHTML) {
+      extraction(responseHTML);
+    }
+  }, [responseHTML]);
+
+  function extraction(data: any) {
+    dispatch(pushDataExtraction(data));
   }
 
-  function dataExtraction(data: any) {
-    // console.log(data);
-  }
+  useAppSelector(state => state.schedule.dataExtraction);
 
   // header
   const [weekDays, setWeekDays] = useState(getListDays(getMonday(moment())));
-  const [moveDate, setMoveDate] = useState();
+  const [moveDate, setMoveDate] = useState(moment());
 
   const handleBackPress = useCallback(() => {
     setWeekDays(getListDays(getMondayBeginWeek(weekDays[0])));
@@ -93,6 +100,16 @@ const ScheduleScreen = () => {
   const handleBtnAfternoon = useCallback(() => {
     setIndexBtnActive(1);
   }, [indexBtnActive]);
+
+  // get info display view
+  useEffect(() => {
+    if (data.length > 0) {
+      const dataMorningAfternoon = filterMorningAfternoon(
+        filterSubjectsDay(moveDate, data),
+      );
+      dispatch(pushDataMorningAfternoon(dataMorningAfternoon));
+    }
+  }, [data, moveDate]);
 
   return (
     <View style={styles.container}>

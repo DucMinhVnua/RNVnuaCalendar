@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, StyleSheet, StatusBar} from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
+import { store } from './src/store'
+import { Provider } from 'react-redux'
 
 /* ===== Before rendering any navigation stack ===== */
-import {enableScreens} from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 enableScreens();
 
 /* ===== Screen component ===== */
@@ -13,24 +15,26 @@ import {
   InfoDetailScreen,
   SupportScreen,
 } from './src/pages/account/scene';
-import {JoinNowScreen, LoginScreen} from './src/pages/login';
+import { JoinNowScreen, LoginScreen } from './src/pages/login';
 import NewsScreen from './src/pages/news';
 import ScheduleScreen from './src/pages/schedule';
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <StatusBar hidden />
-      {/* <WelcomeScreen /> */}
-      {/* <AccountScreen /> */}
-      {/* <SupportScreen /> */}
-      {/* <AboutAppScreen /> */}
-      {/* <InfoDetailScreen /> */}
-      {/* <JoinNowScreen /> */}
-      {/* <LoginScreen /> */}
-      {/* <NewsScreen /> */}
-      <ScheduleScreen />
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <StatusBar hidden />
+        {/* <WelcomeScreen /> */}
+        {/* <AccountScreen /> */}
+        {/* <SupportScreen /> */}
+        {/* <AboutAppScreen /> */}
+        {/* <InfoDetailScreen /> */}
+        {/* <JoinNowScreen /> */}
+        {/* <LoginScreen /> */}
+        {/* <NewsScreen /> */}
+        <ScheduleScreen />
+      </View>
+    </Provider>
   );
 };
 

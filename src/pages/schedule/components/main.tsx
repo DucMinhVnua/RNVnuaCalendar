@@ -10,9 +10,14 @@ import {moderateScale} from 'react-native-size-matters';
 
 import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
+import {useAppSelector} from '../../../hooks/hooks-redux';
 import LectureSchedule from './lectureSchedule';
 
 const Main = ({indexBtnActive, handleBtnMorning, handleBtnAfternoon}: any) => {
+  const dataMorningAfterOfDay = useAppSelector(
+    state => state.schedule.dataMorningAfterOfDay,
+  );
+
   return (
     <View style={styles.container}>
       {/* Button sáng chiều */}
@@ -44,7 +49,14 @@ const Main = ({indexBtnActive, handleBtnMorning, handleBtnAfternoon}: any) => {
       </View>
 
       {/* Lịch lecture */}
-      <LectureSchedule />
+      <LectureSchedule
+        data={
+          indexBtnActive === 0
+            ? dataMorningAfterOfDay.morning
+            : dataMorningAfterOfDay.afternoon
+        }
+        indexBtnActive={indexBtnActive}
+      />
     </View>
   );
 };

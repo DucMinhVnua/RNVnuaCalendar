@@ -1,16 +1,13 @@
 import React from 'react';
 import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import colors from '../../../assets/styles/colors';
 
 import LectureScheduleItem from './lectureScheduleItem';
 
-const LectureSchedule = () => {
-  function renderLectureScheduleItem({item}) {
-    return <LectureScheduleItem />;
+const LectureSchedule = ({data, indexBtnActive}: any) => {
+  function renderLectureScheduleItem({item}: any) {
+    return <LectureScheduleItem item={item} indexBtnActive={indexBtnActive} />;
   }
-
-  const dataFake = Array(5).fill(1);
 
   return (
     <View style={styles.container}>
@@ -18,7 +15,7 @@ const LectureSchedule = () => {
         contentContainerStyle={{
           paddingLeft: moderateScale(16),
         }}
-        data={dataFake}
+        data={data}
         renderItem={renderLectureScheduleItem}
         keyExtractor={(item, index) => `schedule + ${index}`}
       />
