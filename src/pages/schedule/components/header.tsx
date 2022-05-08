@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
+import {StyleSheet, Text, View} from 'react-native';
+import {moderateScale} from 'react-native-size-matters';
+import moment from 'moment';
 
 import {NORMAL_PADDING} from '../../../assets/styles/scale';
 import typos from '../../../assets/styles/textStyles';
@@ -13,12 +14,20 @@ const Header = ({
   handleMoveDate,
   moveDate,
 }: any) => {
+  function textDateCurrent() {
+    // chủ nhật
+    if (moment().day() + 1 === 1) {
+      return `Thứ CN ${moment().format(`[/thg] M/yyyy`)}`;
+    } else {
+      return moment().format(`[Thứ] ${moment().day() + 1}[/thg] M/yyyy`);
+    }
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.wrapperDateTitle}>
-        <Text style={styles.date}>22</Text>
-        <Text style={styles.timePicker}>Thứ 4/thg 11/2021</Text>
+        <Text style={styles.date}>{moment().date().toString()}</Text>
+        <Text style={styles.timePicker}>{textDateCurrent()}</Text>
       </View>
 
       <Schedule
@@ -35,13 +44,11 @@ const Header = ({
 export default memo(Header);
 
 const styles = StyleSheet.create({
-  container: {
-    
-  },
+  container: {},
   wrapperDateTitle: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: moderateScale(10)
+    paddingVertical: moderateScale(10),
   },
   date: {
     paddingRight: NORMAL_PADDING,

@@ -15,7 +15,7 @@ export function getLearnWeeks(
   const schedule = listDateSplit.map(date => {
     dateConvertLastWeek = moment(dateConvertLastWeek).add(7, 'days');
 
-    if (+date) {
+    if (+date || +date === 0) {
       return {
         isLearn: true,
         date: dateConvertLastWeek.toISOString(),
@@ -68,6 +68,7 @@ export function filterMorningAfternoon(data: any) {
 // Lọc ra các dữ liệu có thứ bằng date đã chọn
 export function filterSubjectsDay(day: any, data: any) {
   let subjectList: any = [];
+
   data.forEach((date: any) => {
     if (date.dayOfWeek === moment(day).day()) {
       const isError = checkDate(day, date);
@@ -86,6 +87,13 @@ export function checkDate(date: any, data: any) {
   const mondayFirst = getMondayFirst(data.dateLearn);
   const dateOption = moment(date);
 
+  console.log({
+    data,
+    dateOption: dateOption.toISOString(),
+    mondayFirst: mondayFirst.toISOString(),
+    sundayLast: sundayLast.toISOString(),
+  });
+
   if (dateOption >= mondayFirst && dateOption <= sundayLast) {
     return false;
   } else return true;
@@ -99,4 +107,23 @@ function getSundayLast(data: any) {
 // Lấy thứ 2 đầu tiên theo mảng dateLearn
 function getMondayFirst(data: any) {
   return moment(data[0].date);
+}
+
+// Lọc dữ liệu trường hợp các tiết học trùng tiết
+export function convertSubjectSame(data: any) {
+  const dataNew: any = {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+  };
+
+  data.forEach((subject: any, index: any) => {
+    for (let i = 1; i <= subject.numberLesson; i++) {
+      dataNew[i].push(subject);
+    }
+  });
+
+  return dataNew;
 }

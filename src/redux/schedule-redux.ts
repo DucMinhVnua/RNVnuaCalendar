@@ -52,6 +52,7 @@ export const scheduleSlice = createSlice({
 
             // DSSV is td element tail
             if (textElementTd.includes('DSSV')) {
+
               // get td text element helpful
               const dataHelpful = {
                 id: id++,

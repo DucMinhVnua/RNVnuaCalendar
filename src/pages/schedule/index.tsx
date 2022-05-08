@@ -38,7 +38,7 @@ const ScheduleScreen = () => {
     const formData = customFormData();
 
     const params = {
-      userId: '637747',
+      userId: '637819',
       body: formData,
     };
 
@@ -69,7 +69,7 @@ const ScheduleScreen = () => {
     dispatch(pushDataExtraction(data));
   }
 
-  useAppSelector(state => state.schedule.dataExtraction);
+  useAppSelector((state: any) => state.schedule.dataExtraction);
 
   // header
   const [weekDays, setWeekDays] = useState(getListDays(getMonday(moment())));
@@ -82,6 +82,7 @@ const ScheduleScreen = () => {
   const handleMoveDate = useCallback(
     dateActive => {
       setMoveDate(dateActive);
+      setIndexBtnActive(0);
     },
     [weekDays],
   );
@@ -107,13 +108,13 @@ const ScheduleScreen = () => {
       const dataMorningAfternoon = filterMorningAfternoon(
         filterSubjectsDay(moveDate, data),
       );
+
       dispatch(pushDataMorningAfternoon(dataMorningAfternoon));
     }
   }, [data, moveDate]);
-
   return (
     <View style={styles.container}>
-      {/* Lịch học */}
+      {/* Ngày học trong tuần */}
       <Header
         weekDays={weekDays}
         handleBackPress={handleBackPress}

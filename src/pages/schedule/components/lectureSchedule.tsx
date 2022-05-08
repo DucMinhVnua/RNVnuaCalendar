@@ -1,12 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+import {convertSubjectSame} from '../../../util/schedule';
 
 import LectureScheduleItem from './lectureScheduleItem';
 
 const LectureSchedule = ({data, indexBtnActive}: any) => {
-  function renderLectureScheduleItem({item}: any) {
-    return <LectureScheduleItem item={item} indexBtnActive={indexBtnActive} />;
+  const [dataSubject, setDataSubject] = useState({});
+
+  useEffect(() => {
+    if (data) {
+      setDataSubject(convertSubjectSame(data));
+    }
+  }, [data]);
+
+  function renderLectureScheduleItem({item, index}: any) {
+    return (
+      <LectureScheduleItem
+        item={item}
+        index={index}
+        indexBtnActive={indexBtnActive}
+      />
+    );
   }
 
   return (
@@ -15,7 +30,7 @@ const LectureSchedule = ({data, indexBtnActive}: any) => {
         contentContainerStyle={{
           paddingLeft: moderateScale(16),
         }}
-        data={data}
+        data={Object.values(dataSubject) || []}
         renderItem={renderLectureScheduleItem}
         keyExtractor={(item, index) => `schedule + ${index}`}
       />

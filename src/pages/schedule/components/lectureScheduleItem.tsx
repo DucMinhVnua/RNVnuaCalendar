@@ -6,35 +6,59 @@ import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 import icons from '../../../constant/icons';
 
-const LectureScheduleItem = ({item, indexBtnActive}: any) => {
-  console.log(item);
+const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
+  // trường hợp nhiều môn học trong 1 tiết
+  if (item.length > 1) {
+    return (
+      <View style={styles.containerItem}>
+        <View style={styles.wrapperLeft}>
+          <Text style={styles.lesson}>
+            Tiết {indexBtnActive === 0 ? index + 1 : index + 6}
+          </Text>
+        </View>
+        <View style={{flexGrow: 1}}>
+          {item.map((subjects: any, index: any) => (
+            <React.Fragment key={index}>
+              <View style={[styles.wrapperRight, {marginBottom: 5}]}>
+                <View style={styles.wrapperInfo}>
+                  <icons.BookGrayIcon />
+                  <Text style={styles.content}>{subjects.nameSubject}</Text>
+                </View>
+                <View style={styles.wrapperInfo}>
+                  <icons.RoomScheduleIcon />
+                  <Text style={styles.content}>{subjects.room}</Text>
+                </View>
+              </View>
+            </React.Fragment>
+          ))}
+        </View>
+        <View style={styles.circle}></View>
+      </View>
+    );
+  }
+
   return (
     <>
-      {item.numberLesson &&
-        Array(item.numberLesson)
-          .fill(1)
-          .map((item, index) => {
-            return (
-              <View style={styles.containerItem}>
-                <View style={styles.wrapperLeft}>
-                  <Text style={styles.lesson}>
-                    Tiết {indexBtnActive === 0 ? index + 1 : index + 6}
-                  </Text>
-                </View>
-                <View style={styles.wrapperRight}>
-                  <View style={styles.wrapperInfo}>
-                    <icons.BookGrayIcon />
-                    <Text style={styles.content}>Cơ sở dữ liệu</Text>
-                  </View>
-                  <View style={styles.wrapperInfo}>
-                    <icons.RoomScheduleIcon />
-                    <Text style={styles.content}>B102</Text>
-                  </View>
-                </View>
-                <View style={styles.circle}></View>
-              </View>
-            );
-          })}
+      {item.map((subjects: any, indexItem: any) => (
+        <View style={styles.containerItem} key={indexItem}>
+          <View style={styles.wrapperLeft}>
+            <Text style={styles.lesson}>
+              Tiết {indexBtnActive === 0 ? index + 1 : index + 6}
+            </Text>
+          </View>
+          <View style={styles.wrapperRight}>
+            <View style={styles.wrapperInfo}>
+              <icons.BookGrayIcon />
+              <Text style={styles.content}>{subjects.nameSubject}</Text>
+            </View>
+            <View style={styles.wrapperInfo}>
+              <icons.RoomScheduleIcon />
+              <Text style={styles.content}>{subjects.room}</Text>
+            </View>
+          </View>
+          <View style={styles.circle}></View>
+        </View>
+      ))}
     </>
   );
 };
