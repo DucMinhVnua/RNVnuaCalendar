@@ -5,22 +5,78 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {moderateScale} from 'react-native-size-matters';
 import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 import icons from '../../../constant/icons';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import InfoBottomLine from '../../../components/infoBottomLine';
 import moment from 'moment';
+// import BottomSheet from '@gorhom/bottom-sheet';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
-  let refRBSheet = useRef();
+  // const bottomSheetRef = useRef<BottomSheet>(null);
+  const refRBSheet = useRef();
+
+  const [subject, setSubject] = useState(null);
 
   function handleOnPress() {
-    // refRBSheet.current.open();
-    // console.log(item);
+    // setSubject(subject);
+    // bottomSheetRef.current?.snapToIndex(1);
+    refRBSheet.current.open();
+  }
+
+  function renderBottomSheet(subjects: any) {
+    return (
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,.6)',
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+        }}>
+        <ScrollView>
+          <TouchableOpacity activeOpacity={1}>
+            <InfoBottomLine
+              nameInfo={subjects.code}
+              Icon={<icons.PlayIcon />}
+              label={'Mã môn học'}
+            />
+            <InfoBottomLine
+              nameInfo={subjects.nameSubject}
+              Icon={<icons.BookGrayIcon />}
+              label={'Tên môn học'}
+            />
+            <InfoBottomLine
+              nameInfo={subjects.room}
+              Icon={<icons.RoomScheduleIcon />}
+              label={'Phòng học'}
+            />
+            <InfoBottomLine
+              nameInfo={subjects.numberCredit}
+              Icon={<icons.CreditIcon />}
+              label={'Số tín chỉ'}
+            />
+            <InfoBottomLine
+              nameInfo={`${moment(subjects.dateLearn[0].date).format(
+                'DD/MM/YYYY',
+              )} -> ${moment(
+                subjects.dateLearn[subjects.dateLearn.length - 1].date,
+              ).format('DD/MM/YYYY')}`}
+              Icon={<icons.DateLearnIcon />}
+              label={'Tuần học'}
+            />
+          </TouchableOpacity>
+        </ScrollView>
+      </RBSheet>
+    );
   }
 
   // trường hợp nhiều môn học trong 1 tiết
@@ -48,31 +104,11 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
                   <Text style={styles.content}>{subjects.room}</Text>
                 </View>
               </View>
+              {renderBottomSheet(subjects)}
             </React.Fragment>
           ))}
         </View>
         <View style={styles.circle}></View>
-
-        {/* <RBSheet
-          ref={refRBSheet}
-          height={400}
-          openDuration={400}
-          customStyles={{
-            wrapper: {
-              backgroundColor: 'rgba(0,0,0,.6)',
-            },
-            container: {
-              borderTopLeftRadius: 30,
-              borderTopRightRadius: 30,
-              padding: 10,
-            },
-            draggableIcon: {
-              backgroundColor: '#000',
-            },
-          }}
-          closeOnDragDown={true}>
-          <Text>Hello</Text>
-        </RBSheet> */}
       </TouchableOpacity>
     );
   }
@@ -82,7 +118,7 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
       {item.map((subjects: any, indexItem: any) => (
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={handleOnPress}
+          onPress={() => refRBSheet.current.open()}
           style={styles.containerItem}
           key={indexItem}>
           <View style={styles.wrapperLeft}>
@@ -101,59 +137,7 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
             </View>
           </View>
           <View style={styles.circle}></View>
-
-          {/* <RBSheet
-            ref={refRBSheet}
-            height={300}
-            openDuration={300}
-            customStyles={{
-              wrapper: {
-                backgroundColor: 'rgba(0,0,0,.6)',
-              },
-              container: {
-                borderTopLeftRadius: 30,
-                borderTopRightRadius: 30,
-                padding: 10,
-              },
-              draggableIcon: {
-                backgroundColor: '#000',
-              },
-            }}
-            closeOnDragDown={true}>
-            <ScrollView>
-              <TouchableOpacity activeOpacity={1}>
-                <InfoBottomLine
-                  nameInfo={subjects.code}
-                  Icon={<icons.PlayIcon />}
-                  label={'Mã môn học'}
-                />
-                <InfoBottomLine
-                  nameInfo={subjects.nameSubject}
-                  Icon={<icons.BookGrayIcon />}
-                  label={'Tên môn học'}
-                />
-                <InfoBottomLine
-                  nameInfo={subjects.room}
-                  Icon={<icons.RoomScheduleIcon />}
-                  label={'Phòng học'}
-                />
-                <InfoBottomLine
-                  nameInfo={subjects.numberCredit}
-                  Icon={<icons.CreditIcon />}
-                  label={'Số tín chỉ'}
-                />
-                <InfoBottomLine
-                  nameInfo={`${moment(subjects.dateLearn[0].date).format(
-                    'DD/MM/YYYY',
-                  )} -> ${moment(
-                    subjects.dateLearn[subjects.dateLearn.length - 1].date,
-                  ).format('DD/MM/YYYY')}`}
-                  Icon={<icons.DateLearnIcon />}
-                  label={'Tuần học'}
-                />
-              </TouchableOpacity>
-            </ScrollView>
-          </RBSheet> */}
+          {renderBottomSheet(subjects)}
         </TouchableOpacity>
       ))}
     </>

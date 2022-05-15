@@ -104,32 +104,32 @@ function getMondayFirst(data: any) {
 
 // Lọc dữ liệu trường hợp các tiết học trùng tiết
 export function convertSubjectSame(data: any) {
-  console.log(data);
+  let dataMorningAfternoon = {};
   const dataNew: any = {
     1: [],
     2: [],
     3: [],
     4: [],
     5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
+    10: [],
   };
+  for (let key in data) {
+    data[key].forEach((subject: any, index: any) => {
+      // vd numberLesson = 2, startLearn = 4 => so tiet phai hoc = numberLesson + startLearn - 1, 2 + 4 - 1 = hoc tiet 4,5
+      for (
+        let i = subject.startLearn;
+        i <= subject.startLearn + subject.numberLesson - 1;
+        i++
+      ) {
+        dataNew[i].push(subject);
+      }
+      dataMorningAfternoon[key] = dataNew;
+    });
+  }
 
-  data.forEach((subject: any, index: any) => {
-    // vd numberLesson = 2, startLearn = 4 => so tiet phai hoc = numberLesson + startLearn - 1, 2 + 4 - 1 = hoc tiet 4,5
-    console.log(
-      subject.startLearn,
-      subject.startLearn + subject.numberLesson - 1,
-    );
-    for (
-      let i = subject.startLearn;
-      i <= subject.startLearn + subject.numberLesson - 1;
-      i++
-    ) {
-      console.log(subject.startLearn);
-      dataNew[i].push(subject);
-    }
-  });
-
-  console.log(dataNew);
-
-  return dataNew;
+  return dataMorningAfternoon;
 }

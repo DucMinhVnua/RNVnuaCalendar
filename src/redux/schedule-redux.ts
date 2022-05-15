@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {postAPI} from '../api/lectureSchedule-api';
 import type {RootState} from '../store';
-import {convertTextToNumberDay, getLearnWeeks} from '../util/schedule';
+import {convertSubjectSame, convertTextToNumberDay, getLearnWeeks} from '../util/schedule';
 const cheerio = require('react-native-cheerio');
 
 // thunk
@@ -83,7 +83,7 @@ export const scheduleSlice = createSlice({
       state.dataExtraction = dataConvert;
     },
     pushDataMorningAfternoon: (state, action) => {
-      state.dataMorningAfterOfDay = action.payload;
+      state.dataMorningAfterOfDay = convertSubjectSame(action.payload);
     },
   },
   extraReducers: builder => {

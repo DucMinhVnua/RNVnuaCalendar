@@ -1,38 +1,37 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {FlatList, StatusBar, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-
-import {convertSubjectSame} from '../../../util/schedule';
 
 import LectureScheduleItem from './lectureScheduleItem';
 
 const LectureSchedule = ({data, indexBtnActive}: any) => {
-  const [dataSubject, setDataSubject] = useState({});
-
-  useEffect(() => {
-    if (data) {
-      setDataSubject(convertSubjectSame(data));
-    }
-  }, [data]);
-
   function renderLectureScheduleItem({item, index}: any) {
     return (
-      <LectureScheduleItem
-        item={item}
-        index={index}
-        indexBtnActive={indexBtnActive}
-      />
+      <>
+        {item.length > 0 && (
+          <LectureScheduleItem
+            item={item}
+            index={index}
+            indexBtnActive={indexBtnActive}
+          />
+        )}
+      </>
     );
   }
 
+  console.log(data);
+
   return (
     <View style={styles.container}>
-      <StatusBar />
       <FlatList
         contentContainerStyle={{
           paddingLeft: moderateScale(16),
         }}
-        data={Object.values(dataSubject) || []}
+        data={
+          indexBtnActive === 0
+            ? Object.values(data || {}).slice(0, 5)
+            : Object.values(data || {}).slice(5)
+        }
         renderItem={renderLectureScheduleItem}
         keyExtractor={(item, index) => `schedule + ${index}`}
       />
