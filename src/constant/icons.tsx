@@ -20,7 +20,10 @@ import BookGrayIcon from '../assets/icons/book-gray.svg';
 
 /* ===== Scene schedule screen ===== */
 import ArrowRightScheduleIcon from '../assets/icons/arrow_right_schedule.svg';
-import RoomScheduleIcon from '../assets/icons/lecture-schedule-room.svg'
+import RoomScheduleIcon from '../assets/icons/lecture-schedule-room.svg';
+import PlayIcon from '../assets/icons/play.svg';
+import CreditIcon from '../assets/icons/book-square.svg';
+import DateLearnIcon from '../assets/icons/timer-pause.svg';
 
 const icons = {
   ArrowRightIcon,
@@ -34,11 +37,14 @@ const icons = {
   LockIcon,
   PhoneCallingIcon,
   PhoneIcon,
+  PlayIcon,
   PythonIcon,
   RoomScheduleIcon,
   UserGrayIcon,
   UserIcon,
   VersionIcon,
+  CreditIcon,
+  DateLearnIcon,
 };
 
 export default icons;

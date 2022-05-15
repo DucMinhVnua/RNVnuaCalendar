@@ -1,16 +1,35 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useRef} from 'react';
 
 import {moderateScale} from 'react-native-size-matters';
 import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 import icons from '../../../constant/icons';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import InfoBottomLine from '../../../components/infoBottomLine';
+import moment from 'moment';
 
 const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
+  let refRBSheet = useRef();
+
+  function handleOnPress() {
+    // refRBSheet.current.open();
+    // console.log(item);
+  }
+
   // trường hợp nhiều môn học trong 1 tiết
   if (item.length > 1) {
     return (
-      <View style={styles.containerItem}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={handleOnPress}
+        style={styles.containerItem}>
         <View style={styles.wrapperLeft}>
           <Text style={styles.lesson}>
             Tiết {indexBtnActive === 0 ? index + 1 : index + 6}
@@ -33,14 +52,39 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
           ))}
         </View>
         <View style={styles.circle}></View>
-      </View>
+
+        {/* <RBSheet
+          ref={refRBSheet}
+          height={400}
+          openDuration={400}
+          customStyles={{
+            wrapper: {
+              backgroundColor: 'rgba(0,0,0,.6)',
+            },
+            container: {
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+              padding: 10,
+            },
+            draggableIcon: {
+              backgroundColor: '#000',
+            },
+          }}
+          closeOnDragDown={true}>
+          <Text>Hello</Text>
+        </RBSheet> */}
+      </TouchableOpacity>
     );
   }
 
   return (
     <>
       {item.map((subjects: any, indexItem: any) => (
-        <View style={styles.containerItem} key={indexItem}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={handleOnPress}
+          style={styles.containerItem}
+          key={indexItem}>
           <View style={styles.wrapperLeft}>
             <Text style={styles.lesson}>
               Tiết {indexBtnActive === 0 ? index + 1 : index + 6}
@@ -57,7 +101,60 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
             </View>
           </View>
           <View style={styles.circle}></View>
-        </View>
+
+          {/* <RBSheet
+            ref={refRBSheet}
+            height={300}
+            openDuration={300}
+            customStyles={{
+              wrapper: {
+                backgroundColor: 'rgba(0,0,0,.6)',
+              },
+              container: {
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
+                padding: 10,
+              },
+              draggableIcon: {
+                backgroundColor: '#000',
+              },
+            }}
+            closeOnDragDown={true}>
+            <ScrollView>
+              <TouchableOpacity activeOpacity={1}>
+                <InfoBottomLine
+                  nameInfo={subjects.code}
+                  Icon={<icons.PlayIcon />}
+                  label={'Mã môn học'}
+                />
+                <InfoBottomLine
+                  nameInfo={subjects.nameSubject}
+                  Icon={<icons.BookGrayIcon />}
+                  label={'Tên môn học'}
+                />
+                <InfoBottomLine
+                  nameInfo={subjects.room}
+                  Icon={<icons.RoomScheduleIcon />}
+                  label={'Phòng học'}
+                />
+                <InfoBottomLine
+                  nameInfo={subjects.numberCredit}
+                  Icon={<icons.CreditIcon />}
+                  label={'Số tín chỉ'}
+                />
+                <InfoBottomLine
+                  nameInfo={`${moment(subjects.dateLearn[0].date).format(
+                    'DD/MM/YYYY',
+                  )} -> ${moment(
+                    subjects.dateLearn[subjects.dateLearn.length - 1].date,
+                  ).format('DD/MM/YYYY')}`}
+                  Icon={<icons.DateLearnIcon />}
+                  label={'Tuần học'}
+                />
+              </TouchableOpacity>
+            </ScrollView>
+          </RBSheet> */}
+        </TouchableOpacity>
       ))}
     </>
   );

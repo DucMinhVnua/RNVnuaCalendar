@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {FlatList, StatusBar, StyleSheet, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+
 import {convertSubjectSame} from '../../../util/schedule';
 
 import LectureScheduleItem from './lectureScheduleItem';
@@ -26,6 +27,7 @@ const LectureSchedule = ({data, indexBtnActive}: any) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar />
       <FlatList
         contentContainerStyle={{
           paddingLeft: moderateScale(16),
@@ -45,5 +47,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: moderateScale(20),
     marginHorizontal: moderateScale(-16),
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
 });

@@ -38,7 +38,7 @@ const ScheduleScreen = () => {
     const formData = customFormData();
 
     const params = {
-      userId: '637819',
+      userId: '637755',
       body: formData,
     };
 
@@ -111,7 +111,7 @@ const ScheduleScreen = () => {
 
       dispatch(pushDataMorningAfternoon(dataMorningAfternoon));
     }
-  }, [data, moveDate]);
+  }, [moveDate]);
   return (
     <View style={styles.container}>
       {/* Ngày học trong tuần */}

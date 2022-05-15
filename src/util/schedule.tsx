@@ -87,13 +87,6 @@ export function checkDate(date: any, data: any) {
   const mondayFirst = getMondayFirst(data.dateLearn);
   const dateOption = moment(date);
 
-  console.log({
-    data,
-    dateOption: dateOption.toISOString(),
-    mondayFirst: mondayFirst.toISOString(),
-    sundayLast: sundayLast.toISOString(),
-  });
-
   if (dateOption >= mondayFirst && dateOption <= sundayLast) {
     return false;
   } else return true;
@@ -111,6 +104,7 @@ function getMondayFirst(data: any) {
 
 // Lọc dữ liệu trường hợp các tiết học trùng tiết
 export function convertSubjectSame(data: any) {
+  console.log(data);
   const dataNew: any = {
     1: [],
     2: [],
@@ -120,10 +114,22 @@ export function convertSubjectSame(data: any) {
   };
 
   data.forEach((subject: any, index: any) => {
-    for (let i = 1; i <= subject.numberLesson; i++) {
+    // vd numberLesson = 2, startLearn = 4 => so tiet phai hoc = numberLesson + startLearn - 1, 2 + 4 - 1 = hoc tiet 4,5
+    console.log(
+      subject.startLearn,
+      subject.startLearn + subject.numberLesson - 1,
+    );
+    for (
+      let i = subject.startLearn;
+      i <= subject.startLearn + subject.numberLesson - 1;
+      i++
+    ) {
+      console.log(subject.startLearn);
       dataNew[i].push(subject);
     }
   });
+
+  console.log(dataNew);
 
   return dataNew;
 }
