@@ -3,17 +3,18 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import colors from '../../../assets/styles/colors';
 import {NORMAL_PADDING} from '../../../assets/styles/scale';
+import {useAppSelector} from '../../../hooks/hooks-redux';
 
 // components
-import ItemNews, {PropsOnPress} from './itemNews';
+import ItemNews from './itemNews';
 
-const Main = ({onPress}: PropsOnPress) => {
-  const arrayFake = Array(10).fill(1);
+const Main = () => {
+  const dataExtraction = useAppSelector(state => state.news.dataExtraction);
 
   function renderNews({item}: any) {
     return (
       <View style={styles.wrapperItemNews}>
-        <ItemNews onPress={onPress} />
+        <ItemNews item={item} />
       </View>
     );
   }
@@ -21,8 +22,20 @@ const Main = ({onPress}: PropsOnPress) => {
   return (
     <View style={styles.wrapper}>
       <FlatList
+        ListHeaderComponent={
+          <Text
+            style={{
+              textAlign: 'center',
+              paddingVertical: moderateScale(30),
+              fontSize: 20,
+              fontWeight: '700',
+              textTransform: 'uppercase',
+            }}>
+            Thông báo học viện
+          </Text>
+        }
         showsVerticalScrollIndicator={false}
-        data={arrayFake}
+        data={dataExtraction}
         keyExtractor={(item, index) => `news + ${index}`}
         renderItem={renderNews}
       />
@@ -36,7 +49,6 @@ const styles = StyleSheet.create({
   wrapper: {},
   wrapperItemNews: {
     paddingHorizontal: NORMAL_PADDING,
-    paddingVertical: moderateScale(10),
     borderRadius: 8,
     borderColor: colors.border,
     backgroundColor: colors.white,

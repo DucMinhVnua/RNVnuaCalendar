@@ -2,35 +2,39 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 /* ===== components ===== */
-import FunctionsAccout from './functionsAccout';
+import FunctionsAccount from './functionsAccount';
 import {moderateVerticalScale} from 'react-native-size-matters';
 import icons from '../../../constant/icons';
 
-const Main = () => {
-  function handleSupport() {}
+const Main = ({navigation}: any) => {
+  function handleSupport() {
+    navigation.navigate('Support');
+  }
 
-  function handleAboutApp() {}
+  function handleAboutApp() {
+    navigation.navigate('AboutApp');
+  }
 
   function handleAsync() {}
 
   return (
     <View style={styles.wrapperMain}>
-      <FunctionsAccout
+      <FunctionsAccount
         IconLeft={icons.PhoneCallingIcon}
         nameFunction="Hỗ trợ"
         onPress={handleSupport}
       />
-      <FunctionsAccout
+      <FunctionsAccount
         IconLeft={icons.PythonIcon}
         nameFunction="Về ứng dụng"
         onPress={handleAboutApp}
       />
-      <FunctionsAccout
+      <FunctionsAccount
         isNavigate={false}
         IconLeft={icons.VersionIcon}
         nameFunction="Phiên bản"
       />
-      <FunctionsAccout
+      <FunctionsAccount
         IconLeft={icons.AsyncIcon}
         nameFunction="Đồng bộ"
         onPress={handleAsync}

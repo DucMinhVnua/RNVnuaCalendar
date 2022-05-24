@@ -1,25 +1,21 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {verticalScale} from 'react-native-size-matters';
+import {URL_BASE} from '../../../api';
 
 import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 
-export interface PropsOnPress {
-  onPress(params: any): void;
-}
-
-const ItemNews = ({onPress}: PropsOnPress) => {
+const ItemNews = ({item}: any) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={onPress}
+      onPress={() => Linking.openURL(`${URL_BASE}/${item.link}`)}
       style={styles.wrapper}>
-      <Text style={styles.news}>
-        Thông báo về việc xét và công nhận tốt nghiệp Đại học, Cao đẳng hệ chính
-        quy đợt 30/03/2022
+      <Text style={styles.news}>{item.notification}</Text>
+      <Text style={styles.timeNews}>
+        {item.dateTitle.includes('(') ? item.dateTitle : `(${item.dateTitle})`}
       </Text>
-      <Text style={styles.timeNews}>(23/03/2022)</Text>
     </TouchableOpacity>
   );
 };
@@ -34,7 +30,6 @@ const styles = StyleSheet.create({
   },
   timeNews: {
     ...typos.titleTiny,
-    color: colors.description,
     alignSelf: 'flex-end',
     color: colors.colorFull09,
   },

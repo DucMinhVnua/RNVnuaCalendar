@@ -1,23 +1,34 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {Alert, Linking, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
 
 // components
 import Main from './components/main';
 import {NORMAL_PADDING} from '../../assets/styles/scale';
 import {moderateScale} from 'react-native-size-matters';
 import colors from '../../assets/styles/colors';
+import {fetchDataHTML, pushDataExtraction} from '../../redux/news-redux';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '../../hooks/hooks-redux';
 
 const NewsScreen = () => {
-  function handleClickItemNews() {
-    console.log('Click item news');
-  }
+  const dispatch = useDispatch();
+  const responseHTML = useAppSelector(state => state.news.responseHTML);
+
+  useEffect(() => {
+    dispatch(fetchDataHTML());
+  }, []);
+
+  useEffect(() => {
+    if (responseHTML) {
+      dispatch(pushDataExtraction(responseHTML));
+    }
+  }, [responseHTML]);
 
   return (
     <View style={styles.container}>
-      {/* header */}
       {/* main */}
       <View style={styles.wrapperMain}>
-        <Main onPress={handleClickItemNews} />
+        <Main />
       </View>
     </View>
   );
@@ -27,10 +38,11 @@ export default NewsScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: colors.background,
   },
   wrapperMain: {
+    flexGrow: 1,
     paddingHorizontal: NORMAL_PADDING - 5,
     paddingVertical: moderateScale(10),
   },

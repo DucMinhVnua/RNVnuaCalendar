@@ -18,28 +18,29 @@ import {
 import {JoinNowScreen, LoginScreen} from './src/pages/login';
 import NewsScreen from './src/pages/news';
 import ScheduleScreen from './src/pages/schedule';
+import BottomNavigation from './src/navigation/bottomNavigation';
+import {NavigationContainer} from '@react-navigation/native';
+import AccountNavigation from './src/navigation/accountNavigation';
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <View style={styles.container}>
-        {/* <WelcomeScreen /> */}
-        {/* <AccountScreen /> */}
-        {/* <SupportScreen /> */}
-        {/* <AboutAppScreen /> */}
-        {/* <InfoDetailScreen /> */}
-        {/* <JoinNowScreen /> */}
-        {/* <LoginScreen /> */}
-        {/* <NewsScreen /> */}
-        <ScheduleScreen />
-      </View>
-    </Provider>
+    <NavigationContainer>
+      <Provider store={store}>
+        <View style={styles.container}>
+          {/* <WelcomeScreen /> */}
+          {/* <JoinNowScreen /> */}
+          {/* <LoginScreen /> */}
+          <AccountNavigation />
+        </View>
+      </Provider>
+    </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
+    backgroundColor: 'red',
   },
 });
 

@@ -11,11 +11,11 @@ import ItemInfo from './components/itemInfo';
 import Header from './components/header';
 import Main from './components/main';
 
-const InfoDetailScreen = () => {
+const InfoDetailScreen = ({navigation, route}: any) => {
   return (
     <View style={styles.wrapper}>
       <Header />
-      <Main />
+      <Main data={route.params.data} />
     </View>
   );
 };

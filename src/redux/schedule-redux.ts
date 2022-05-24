@@ -68,8 +68,6 @@ export const scheduleSlice = createSlice({
               };
 
               dataConvert.push(dataHelpful);
-
-              // dataCalendar.push(...convertData);
               col = [];
             } else {
               col.push(textElementTd);

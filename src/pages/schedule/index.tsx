@@ -75,6 +75,8 @@ const ScheduleScreen = () => {
   const [weekDays, setWeekDays] = useState(getListDays(getMonday(moment())));
   const [moveDate, setMoveDate] = useState(moment());
 
+  console.log(weekDays);
+
   const handleBackPress = useCallback(() => {
     setWeekDays(getListDays(getMondayBeginWeek(weekDays[0])));
   }, [weekDays]);

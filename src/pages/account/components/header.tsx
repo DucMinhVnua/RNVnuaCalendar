@@ -15,12 +15,7 @@ import {scale} from 'react-native-size-matters';
 import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 
-interface Props {
-  name: string;
-  major: string;
-}
-
-const Header = ({name, major}: Props) => {
+const Header = ({data, navigation}: any) => {
   return (
     <View style={styles.wrapperHeader}>
       <Image
@@ -28,13 +23,20 @@ const Header = ({name, major}: Props) => {
         width={Dimensions.get('window').width}
       />
       <View style={styles.wrapperInfo}>
-        <TouchableOpacity style={styles.wrapperName} activeOpacity={0.8}>
-          <Text style={styles.name}>{name}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('InfoDetail', {
+              data: data,
+            });
+          }}
+          style={styles.wrapperName}
+          activeOpacity={0.8}>
+          <Text style={styles.name}>{data.name}</Text>
           <View style={styles.wrapperIconName}>
             <icons.DoubleArrowRightIcon />
           </View>
         </TouchableOpacity>
-        <Text style={styles.major}>{major}</Text>
+        <Text style={styles.major}>{data.myClass}</Text>
       </View>
     </View>
   );

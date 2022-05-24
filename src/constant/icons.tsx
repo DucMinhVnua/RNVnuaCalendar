@@ -25,6 +25,11 @@ import PlayIcon from '../assets/icons/play.svg';
 import CreditIcon from '../assets/icons/book-square.svg';
 import DateLearnIcon from '../assets/icons/timer-pause.svg';
 
+// tab bar bottom
+import BellTabIcon from '../assets/icons/bell-tab-bottom.svg';
+import CalendarTabIcon from '../assets/icons/calendar-tab-bottom.svg';
+import UserTabIcon from '../assets/icons/user-tab-bottom.svg';
+
 const icons = {
   ArrowRightIcon,
   ArrowRightScheduleIcon,
@@ -45,6 +50,9 @@ const icons = {
   VersionIcon,
   CreditIcon,
   DateLearnIcon,
+  BellTabIcon,
+  CalendarTabIcon,
+  UserTabIcon,
 };
 
 export default icons;

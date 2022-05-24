@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import colors from '../../assets/styles/colors';
 
@@ -7,17 +7,41 @@ import colors from '../../assets/styles/colors';
 import Header from './components/header';
 import Main from './components/main';
 import Footer from './components/footer';
+import {fetchDataHTML, pushDataExtraction} from '../../redux/account-redux';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
 
-const AccountScreen = () => {
+const AccountScreen = ({navigation}: any) => {
+  const dispatch = useAppDispatch();
+  const responseHTML = useAppSelector(state => state.account.responseHTML);
+  const data = useAppSelector(state => state.account.dataExtraction);
+
+  useEffect(() => {
+    handleFetchHtml();
+  }, [responseHTML]);
+
+  function handleFetchHtml() {
+    const params = {
+      id: '637747',
+    };
+
+    dispatch(fetchDataHTML(params));
+  }
+
+  useEffect(() => {
+    if (responseHTML) {
+      dispatch(pushDataExtraction(responseHTML));
+    }
+  }, [responseHTML]);
+
   function handleLogout() {}
 
   return (
     <View style={styles.container}>
       {/* header */}
-      <Header name="Nguyễn Đức Minh" major="K63ATTT" />
+      <Header data={data} navigation={navigation} />
 
       {/* main */}
-      <Main />
+      <Main navigation={navigation} />
 
       {/* footer */}
       <Footer onPress={handleLogout} />

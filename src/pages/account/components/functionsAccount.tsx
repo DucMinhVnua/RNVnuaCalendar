@@ -6,7 +6,7 @@ import {moderateScale} from 'react-native-size-matters';
 import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 
-const FunctionsAccout = ({
+const FunctionsAccount = ({
   isNavigate = true,
   IconLeft = icons.PhoneCallingIcon,
   nameFunction = 'Hỗ trợ',
@@ -44,7 +44,7 @@ const FunctionsAccout = ({
   );
 };
 
-export default FunctionsAccout;
+export default FunctionsAccount;
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -17,7 +17,9 @@ const ItemInfo = ({label, IconInfo, nameInfo}: Props) => {
     <View style={styles.wrapper}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.wrapperInfo}>
-        <IconInfo />
+        <View style={{width: 20}}>
+          <IconInfo />
+        </View>
         <Text style={styles.nameInfo}>{nameInfo}</Text>
       </View>
     </View>

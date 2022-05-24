@@ -13,131 +13,11 @@ import typos from '../../../assets/styles/textStyles';
 import icons from '../../../constant/icons';
 import InfoBottomLine from '../../../components/infoBottomLine';
 import moment from 'moment';
-// import BottomSheet from '@gorhom/bottom-sheet';
 import RBSheet from 'react-native-raw-bottom-sheet';
-
-const BottomSheetLessonDouble = ({subjects, index}: any) => {
-  const refRBSheet = useRef();
-
-  return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => refRBSheet.current.open()}
-      key={index}>
-      <View style={[styles.wrapperRight, {marginBottom: 5}]}>
-        <View style={styles.wrapperInfo}>
-          <icons.BookGrayIcon />
-          <Text style={styles.content}>{subjects.nameSubject}</Text>
-        </View>
-        <View style={styles.wrapperInfo}>
-          <icons.RoomScheduleIcon />
-          <Text style={styles.content}>{subjects.room}</Text>
-        </View>
-      </View>
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={false}
-        customStyles={{
-          wrapper: {
-            backgroundColor: 'rgba(0,0,0,.6)',
-          },
-          draggableIcon: {
-            backgroundColor: '#000',
-          },
-        }}>
-        <ScrollView>
-          <TouchableOpacity activeOpacity={1}>
-            <InfoBottomLine
-              nameInfo={subjects.code}
-              Icon={<icons.PlayIcon />}
-              label={'Mã môn học'}
-            />
-            <InfoBottomLine
-              nameInfo={subjects.nameSubject}
-              Icon={<icons.BookGrayIcon />}
-              label={'Tên môn học'}
-            />
-            <InfoBottomLine
-              nameInfo={subjects.room}
-              Icon={<icons.RoomScheduleIcon />}
-              label={'Phòng học'}
-            />
-            <InfoBottomLine
-              nameInfo={subjects.numberCredit}
-              Icon={<icons.CreditIcon />}
-              label={'Số tín chỉ'}
-            />
-            <InfoBottomLine
-              nameInfo={`${moment(subjects.dateLearn[0].date).format(
-                'DD/MM/YYYY',
-              )} -> ${moment(
-                subjects.dateLearn[subjects.dateLearn.length - 1].date,
-              ).format('DD/MM/YYYY')}`}
-              Icon={<icons.DateLearnIcon />}
-              label={'Tuần học'}
-            />
-          </TouchableOpacity>
-        </ScrollView>
-      </RBSheet>
-    </TouchableOpacity>
-  );
-};
+import BottomSheetLesson from '../../../components/bottomSheet';
 
 const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
-  // const bottomSheetRef = useRef<BottomSheet>(null);
   const refRBSheet = useRef();
-
-  function renderBottomSheet(subjects: any) {
-    return (
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={false}
-        customStyles={{
-          wrapper: {
-            backgroundColor: 'rgba(0,0,0,.6)',
-          },
-          draggableIcon: {
-            backgroundColor: '#000',
-          },
-        }}>
-        <ScrollView>
-          <TouchableOpacity activeOpacity={1}>
-            <InfoBottomLine
-              nameInfo={subjects.code}
-              Icon={<icons.PlayIcon />}
-              label={'Mã môn học'}
-            />
-            <InfoBottomLine
-              nameInfo={subjects.nameSubject}
-              Icon={<icons.BookGrayIcon />}
-              label={'Tên môn học'}
-            />
-            <InfoBottomLine
-              nameInfo={subjects.room}
-              Icon={<icons.RoomScheduleIcon />}
-              label={'Phòng học'}
-            />
-            <InfoBottomLine
-              nameInfo={subjects.numberCredit}
-              Icon={<icons.CreditIcon />}
-              label={'Số tín chỉ'}
-            />
-            <InfoBottomLine
-              nameInfo={`${moment(subjects.dateLearn[0].date).format(
-                'DD/MM/YYYY',
-              )} -> ${moment(
-                subjects.dateLearn[subjects.dateLearn.length - 1].date,
-              ).format('DD/MM/YYYY')}`}
-              Icon={<icons.DateLearnIcon />}
-              label={'Tuần học'}
-            />
-          </TouchableOpacity>
-        </ScrollView>
-      </RBSheet>
-    );
-  }
 
   // trường hợp nhiều môn học trong 1 tiết
   if (item.length > 1) {
@@ -150,7 +30,11 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
         </View>
         <View style={{flexGrow: 1}}>
           {item.map((subjects: any, index: any) => (
-            <BottomSheetLessonDouble subjects={subjects} index={index} />
+            <BottomSheetLesson
+              subjects={subjects}
+              index={index}
+              isDoubleLesson
+            />
           ))}
         </View>
         <View style={styles.circle}></View>
@@ -182,7 +66,11 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
             </View>
           </View>
           <View style={styles.circle}></View>
-          {renderBottomSheet(subjects)}
+          <BottomSheetLesson
+            subjects={subjects}
+            index={index}
+            refRBSheet={refRBSheet}
+          />
         </TouchableOpacity>
       ))}
     </>
