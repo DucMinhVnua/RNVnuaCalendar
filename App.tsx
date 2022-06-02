@@ -40,7 +40,6 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: 'red',
   },
 });
 

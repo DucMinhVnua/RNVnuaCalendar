@@ -33,14 +33,14 @@ const AccountNavigation = () => {
         options={{
           title: 'Hỗ trợ',
         }}
-        name="AboutApp"
+        name="Support"
         component={AboutAppScreen}
       />
       <Stack.Screen
         options={{
           title: 'Về ứng dụng',
         }}
-        name="Support"
+        name="AboutApp"
         component={SupportScreen}
       />
     </Stack.Navigator>

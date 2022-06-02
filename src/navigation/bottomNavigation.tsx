@@ -26,7 +26,7 @@ const BottomNavigation = () => {
         component={NewsScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({focused}: any) => (
             <View
               style={{
                 alignItems: 'center',
@@ -50,7 +50,7 @@ const BottomNavigation = () => {
         component={ScheduleScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({focused}: any) => (
             <View
               style={{
                 alignItems: 'center',
@@ -74,7 +74,7 @@ const BottomNavigation = () => {
         component={AccountScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({focused}: any) => (
             <View
               style={{
                 alignItems: 'center',
