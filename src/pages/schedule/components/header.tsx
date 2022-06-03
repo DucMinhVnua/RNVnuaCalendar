@@ -6,6 +6,7 @@ import moment from 'moment';
 import {NORMAL_PADDING} from '../../../assets/styles/scale';
 import typos from '../../../assets/styles/textStyles';
 import Schedule from './schedule';
+import {useAppSelector} from '../../../hooks/hooks-redux';
 
 const Header = ({
   weekDays,
@@ -13,6 +14,7 @@ const Header = ({
   handleNextPress,
   handleMoveDate,
   moveDate,
+  dateLearn,
 }: any) => {
   function textDateCurrent() {
     // chủ nhật
@@ -36,6 +38,7 @@ const Header = ({
         onNextPress={handleNextPress}
         onPress={handleMoveDate}
         moveDate={moveDate}
+        dateLearn={dateLearn}
       />
     </View>
   );

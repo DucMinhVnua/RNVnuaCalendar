@@ -18,12 +18,12 @@ export function getLearnWeeks(
     if (+date || +date === 0) {
       return {
         isLearn: true,
-        date: dateConvertLastWeek.toISOString(),
+        date: moment(dateConvertLastWeek).toISOString(),
       };
     } else {
       return {
         isLearn: false,
-        date: dateConvertLastWeek.toISOString(),
+        date: moment(dateConvertLastWeek).toISOString(),
       };
     }
   });
@@ -81,6 +81,56 @@ export function filterSubjectsDay(day: any, data: any) {
   return subjectList;
 }
 
+// input: list week hiện tại, data extraction, output: những ngày có lịch học trong tuần
+export function filterDateLearnInWeek(data: any, monday: any) {
+  if (data.length > 0) {
+    let learnDates: any = [];
+
+    monday = moment(monday).format('YYYY/MM/DD');
+
+    data.map((item: any) => {
+      item.dateLearn.map((dateMonday: any) => {
+        /// get date(thứ 2) từ object dateLearn
+        const date = dateMonday.date;
+
+        /// format date -> YYYY/MM/DD
+        const dateFormat = moment(date)
+          .subtract('1', 'days')
+          .format('YYYY/MM/DD');
+
+        const conditionDate =
+          moment(monday).toISOString() === moment(dateFormat).toISOString();
+
+        /// cộng index lấy ra ngày học trong tuần
+        let dayOfWeek;
+
+        if (item.dayOfWeek === 0) {
+          dayOfWeek = moment(dateFormat).add('7', 'days');
+        } else {
+          dayOfWeek = moment(dateFormat).add(`${item.dayOfWeek}`, 'days');
+        }
+
+        /// tìm môn học có tuần bắt đầu bằng thứ 2 truyền vào
+        if (
+          conditionDate &&
+          learnDates.includes(
+            moment(dayOfWeek).subtract('1', 'days').format('YYYY/MM/DD'),
+          ) == false
+        ) {
+          learnDates.push(
+            moment(dayOfWeek).subtract('1', 'days').format('YYYY/MM/DD'),
+          );
+        }
+      });
+    });
+
+    console.log(learnDates);
+    console.log('\n ===================');
+
+    return learnDates;
+  }
+}
+
 // Kiểm tra ngày tích có nằm trong các ngày học không
 export function checkDate(date: any, data: any) {
   const sundayLast = getSundayLast(data.dateLearn);
@@ -132,4 +182,12 @@ export function convertSubjectSame(data: any) {
   }
 
   return dataMorningAfternoon;
+}
+
+export function convertTimeZero(date: any) {
+  var m = moment(date).utcOffset(0);
+  m.set({hour: 0, minute: 0, second: 0, millisecond: 0});
+  m.format();
+
+  return m;
 }

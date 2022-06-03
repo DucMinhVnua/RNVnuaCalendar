@@ -33,15 +33,15 @@ const AccountNavigation = () => {
         options={{
           title: 'Hỗ trợ',
         }}
-        name="AboutApp"
-        component={AboutAppScreen}
+        name="Support"
+        component={SupportScreen}
       />
       <Stack.Screen
         options={{
           title: 'Về ứng dụng',
         }}
-        name="Support"
-        component={SupportScreen}
+        name="AboutApp"
+        component={AboutAppScreen}
       />
     </Stack.Navigator>
   );

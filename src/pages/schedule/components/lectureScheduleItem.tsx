@@ -11,9 +11,6 @@ import {moderateScale} from 'react-native-size-matters';
 import colors from '../../../assets/styles/colors';
 import typos from '../../../assets/styles/textStyles';
 import icons from '../../../constant/icons';
-import InfoBottomLine from '../../../components/infoBottomLine';
-import moment from 'moment';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import BottomSheetLesson from '../../../components/bottomSheet';
 
 const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
@@ -30,11 +27,13 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
         </View>
         <View style={{flexGrow: 1}}>
           {item.map((subjects: any, index: any) => (
-            <BottomSheetLesson
-              subjects={subjects}
-              index={index}
-              isDoubleLesson
-            />
+            <React.Fragment key={index}>
+              <BottomSheetLesson
+                subjects={subjects}
+                index={index}
+                isDoubleLesson
+              />
+            </React.Fragment>
           ))}
         </View>
         <View style={styles.circle}></View>

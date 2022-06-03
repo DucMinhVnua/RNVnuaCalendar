@@ -21,7 +21,11 @@ import {
   pushDataMorningAfternoon,
 } from '../../redux/schedule-redux';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
-import {filterMorningAfternoon, filterSubjectsDay} from '../../util/schedule';
+import {
+  filterDateLearnInWeek,
+  filterMorningAfternoon,
+  filterSubjectsDay,
+} from '../../util/schedule';
 
 const ScheduleScreen = () => {
   // api
@@ -74,8 +78,11 @@ const ScheduleScreen = () => {
   // header
   const [weekDays, setWeekDays] = useState(getListDays(getMonday(moment())));
   const [moveDate, setMoveDate] = useState(moment());
+  const [dateLearn, setDateLearn] = useState();
 
-  console.log(weekDays);
+  useEffect(() => {
+    setDateLearn(filterDateLearnInWeek(data, weekDays[0]));
+  }, [weekDays]);
 
   const handleBackPress = useCallback(() => {
     setWeekDays(getListDays(getMondayBeginWeek(weekDays[0])));
@@ -123,6 +130,7 @@ const ScheduleScreen = () => {
         handleNextPress={handleNextPress}
         handleMoveDate={handleMoveDate}
         moveDate={moveDate}
+        dateLearn={dateLearn}
       />
 
       {/* Danh sách tiết học */}

@@ -8,14 +8,7 @@ import {WEEKDAYS} from '../../../constant/schedule';
 import typos from '../../../assets/styles/textStyles';
 import colors from '../../../assets/styles/colors';
 import {getToday, getValueFromDate} from '../../../util/time';
-
-interface Props {
-  weekDays: any;
-  onBackPress(params: any): void;
-  onNextPress(params: any): void;
-  onPress(params: any): void;
-  moveDate: Date;
-}
+import moment from 'moment';
 
 const Schedule = ({
   weekDays = [],
@@ -23,14 +16,35 @@ const Schedule = ({
   onNextPress,
   onPress,
   moveDate,
-}: Props) => {
-
+  dateLearn,
+}: any) => {
   const backgroundColorActive = {
-    backgroundColor: colors.colorFull09
+    backgroundColor: colors.colorFull09,
   };
 
-  const textColorActive = {
-    color: colors.white
+  // console.log('dateLearn: ', dateLearn);
+  // console.log('weekDays: ', weekDays);
+
+  function handleDayOfWeeks(index: any, item: any, weekDays: any) {
+    if (moveDate?.toString() === weekDays[index].toString()) {
+      return (
+        <Text style={[typos.bodySmall, {color: colors.white}]}>{item}</Text>
+      );
+    } else if (
+      dateLearn?.includes(moment(weekDays[index]).format('YYYY/MM/DD'))
+    ) {
+      return (
+        <Text style={[typos.bodySmall, {color: colors.colorFull07}]}>
+          {item}
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={[typos.bodySmall, {color: colors.placeholder}]}>
+          {item}
+        </Text>
+      );
+    }
   }
 
   return (
@@ -50,15 +64,17 @@ const Schedule = ({
             activeOpacity={0.8}
             onPress={() => onPress(weekDays[index])}
             key={index}
-            style={[{
-              flex: 1,
-              borderRadius: 8,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }, moveDate?.toString() === weekDays[index].toString() && backgroundColorActive]}>
-            <Text style={[typos.bodySmall, moveDate?.toString() === weekDays[index].toString() ? textColorActive : {color: colors.placeholder}]}>
-              {item}
-            </Text>
+            style={[
+              {
+                flex: 1,
+                borderRadius: 8,
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              moveDate?.toString() === weekDays[index].toString() &&
+                backgroundColorActive,
+            ]}>
+            {handleDayOfWeeks(index, item, weekDays)}
 
             <Text
               style={[
@@ -69,7 +85,9 @@ const Schedule = ({
                       ? colors.buttonBg
                       : colors.bodyText,
                 },
-                moveDate?.toString() === weekDays[index].toString() && textColorActive
+                moveDate?.toString() === weekDays[index].toString() && {
+                  color: colors.white,
+                },
               ]}>
               {getValueFromDate(weekDays[index], 'date')}
             </Text>

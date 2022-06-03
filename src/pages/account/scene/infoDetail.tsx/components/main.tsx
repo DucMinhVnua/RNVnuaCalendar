@@ -9,7 +9,6 @@ import icons from '../../../../../constant/icons';
 import ItemInfo from './itemInfo';
 
 const Main = ({data}: any) => {
-  console.log(data);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.wrapper}>
