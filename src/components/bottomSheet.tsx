@@ -43,7 +43,7 @@ const BottomSheetLesson = ({
           <RBSheet
             ref={refRBSheets}
             closeOnDragDown={true}
-            closeOnPressMask={false}
+            closeOnPressMask={true}
             customStyles={{
               wrapper: {
                 backgroundColor: 'rgba(0,0,0,.6)',

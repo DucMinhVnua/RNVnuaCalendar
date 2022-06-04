@@ -124,9 +124,6 @@ export function filterDateLearnInWeek(data: any, monday: any) {
       });
     });
 
-    console.log(learnDates);
-    console.log('\n ===================');
-
     return learnDates;
   }
 }

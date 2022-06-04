@@ -12,8 +12,10 @@ export async function postAPI(url: string, body: any) {
     redirect: 'follow',
   };
 
+  console.log('Đây là đường dẫn: ', url);
+
   return await fetch(`${URL_BASE}/${url}`, requestOptions)
     .then(response => response.text())
     .then(result => result)
-    .catch(e => console.log('Lỗi call api: ', e));
+    .catch(e => console.log('Lỗi call api trong postAPI: ', e));
 }

@@ -9,12 +9,20 @@ import {
 } from '../pages/account/scene';
 import AccountScreen from '../pages/account';
 import BottomNavigation from './bottomNavigation';
+import LoginNavigation from './loginNavigation';
 
 const AccountNavigation = () => {
   const Stack = createNativeStackNavigator();
 
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="Login"
+        component={LoginNavigation}
+      />
       <Stack.Screen
         options={{
           headerShown: false,

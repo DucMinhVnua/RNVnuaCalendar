@@ -33,36 +33,6 @@ const ScheduleScreen = () => {
   const responseHTML = useAppSelector(state => state.schedule.responseHTML);
   const data = useAppSelector(state => state.schedule.dataExtraction);
 
-  // get data
-  useEffect(() => {
-    handleGetData();
-  }, []);
-
-  function handleGetData() {
-    const formData = customFormData();
-
-    const params = {
-      userId: '637747',
-      body: formData,
-    };
-
-    dispatch(fetchDataHTML(params));
-  }
-
-  function customFormData() {
-    let formData = new FormData();
-    formData.append(
-      '__EVENTTARGET',
-      'ctl00$ContentPlaceHolder1$ctl00$rad_ThuTiet',
-    );
-    formData.append(
-      'ctl00$ContentPlaceHolder1$ctl00$rad_ThuTiet',
-      'rad_ThuTiet',
-    );
-
-    return formData;
-  }
-
   useEffect(() => {
     if (responseHTML) {
       extraction(responseHTML);

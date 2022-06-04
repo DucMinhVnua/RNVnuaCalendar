@@ -13,9 +13,7 @@ const Main = () => {
       <Text style={styles.titleWelcome}>
         Chào mừng bạn đến với Vnua Calendar
       </Text>
-      <Text style={styles.titleNote}>
-        Bạn có thể đăng nhập hoặc vào xem lịch trực tiếp
-      </Text>
+      <Text style={styles.titleNote}>Vui lòng nhấn tham gia ngay xem lịch</Text>
     </View>
   );
 };

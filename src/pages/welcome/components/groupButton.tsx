@@ -24,7 +24,7 @@ const GroupButton = ({btnGroups}: Props) => {
           backgroundColor={colors.colorFull10}
         />
       </View>
-      <ButtonLogin textButton="Đăng nhập" onPress={btnGroups.handleLogin} />
+      {/* <ButtonLogin textButton="Đăng nhập" onPress={btnGroups.handleLogin} /> */}
     </View>
   );
 };

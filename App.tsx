@@ -27,7 +27,6 @@ const App = () => {
     <NavigationContainer>
       <Provider store={store}>
         <View style={styles.container}>
-          {/* <WelcomeScreen /> */}
           {/* <JoinNowScreen /> */}
           {/* <LoginScreen /> */}
           <AccountNavigation />

@@ -22,9 +22,6 @@ const Schedule = ({
     backgroundColor: colors.colorFull09,
   };
 
-  // console.log('dateLearn: ', dateLearn);
-  // console.log('weekDays: ', weekDays);
-
   function handleDayOfWeeks(index: any, item: any, weekDays: any) {
     if (moveDate?.toString() === weekDays[index].toString()) {
       return (

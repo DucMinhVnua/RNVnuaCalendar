@@ -6,7 +6,7 @@ import typos from '../../../../../assets/styles/textStyles';
 import colors from '../../../../../assets/styles/colors';
 import {NORMAL_PADDING} from '../../../../../assets/styles/scale';
 
-const Main = () => {
+const Main = ({value, onChangeText}: any) => {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.label}>Nhập mã</Text>
@@ -14,7 +14,12 @@ const Main = () => {
         <View style={styles.wrapperIcon}>
           <icons.UserIcon />
         </View>
-        <TextInput placeholder="Nhập mã" style={styles.input} />
+        <TextInput
+          placeholder="Nhập mã"
+          value={value}
+          onChangeText={onChangeText}
+          style={styles.input}
+        />
       </View>
     </View>
   );

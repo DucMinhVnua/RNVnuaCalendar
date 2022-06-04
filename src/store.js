@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import scheduleRedux from './redux/schedule-redux'
 import newsRedux from './redux/news-redux'
 import accountRedux from './redux/account-redux'
+import loginRedux from './redux/login-redux'
 
 export const store = configureStore({
     reducer: {
         schedule: scheduleRedux,
         news: newsRedux,
-        account: accountRedux
+        account: accountRedux,
+        login: loginRedux
     },
 })
 

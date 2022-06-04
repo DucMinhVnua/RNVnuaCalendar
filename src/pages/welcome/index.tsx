@@ -14,21 +14,21 @@ export interface propsGroupButton {
   handleLogin(params: any): void;
 }
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({navigation}: any) => {
   /* ===== Đăng nhập bằng MSV ===== */
   function handleJoinNow() {
-    console.log('đến màn đăng nhập msv');
+    navigation.navigate('JoinNow');
   }
 
   /* ===== Đăng nhập bằng tài khoản mật khẩu ===== */
-  function handleLogin() {
-    console.log('đến màn đăng nhâp tk, mk');
-  }
+  // function handleLogin() {
+  //   console.log('đến màn đăng nhâp tk, mk');
+  // }
 
   function renderGroupButton() {
-    const props: propsGroupButton = {
+    const props: any = {
       handleJoinNow,
-      handleLogin,
+      // handleLogin,
     };
 
     return <GroupButton btnGroups={props} />;

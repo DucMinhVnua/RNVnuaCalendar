@@ -13,7 +13,7 @@ const bannerAboutApp = require('../assets/images/banner_about_app.png');
 const bannerInfoDetail = require('../assets/images/banner_info_detail.png');
 
 /* ===== Scene news screen ===== */
-const bannerNews = require('../assets/images/Banner_news.png');
+const bannerNews = require('../assets/images/banner_news.png');
 
 /* ===== Scene schedule screen ===== */
 const khongCoLichHoc = require('../assets/images/khong-co-lich-hoc.png');

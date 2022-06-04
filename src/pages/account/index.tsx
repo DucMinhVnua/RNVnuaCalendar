@@ -15,17 +15,17 @@ const AccountScreen = ({navigation}: any) => {
   const responseHTML = useAppSelector(state => state.account.responseHTML);
   const data = useAppSelector(state => state.account.dataExtraction);
 
-  useEffect(() => {
-    handleFetchHtml();
-  }, [responseHTML]);
+  // useEffect(() => {
+  //   handleFetchHtml();
+  // }, [responseHTML]);
 
-  function handleFetchHtml() {
-    const params = {
-      id: '637747',
-    };
+  // function handleFetchHtml() {
+  //   const params = {
+  //     id: '637747',
+  //   };
 
-    dispatch(fetchDataHTML(params));
-  }
+  //   dispatch(fetchDataHTML(params));
+  // }
 
   useEffect(() => {
     if (responseHTML) {
@@ -33,7 +33,9 @@ const AccountScreen = ({navigation}: any) => {
     }
   }, [responseHTML]);
 
-  function handleLogout() {}
+  function handleLogout() {
+    navigation.navigate('JoinNow');
+  }
 
   return (
     <View style={styles.container}>
