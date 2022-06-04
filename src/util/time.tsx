@@ -39,13 +39,11 @@ export function getMonday(dateCurrent: any) {
 
   const date = new Date(dateMoment);
   date.setHours(0, 0, 0, 0);
-  console.log(date);
   return date;
 }
 
 export function getMondayBeginWeek(mondayDateCurrent: any) {
   const dateNew = new Date(mondayDateCurrent);
-  console.log('======', dateNew);
   return subtractDay(dateNew, 7);
 }
 

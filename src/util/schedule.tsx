@@ -91,26 +91,27 @@ export function filterDateLearnInWeek(data: any, monday: any) {
     monday.setHours(0, 0, 0, 0);
 
     data.map((item: any) => {
-      item.dateLearn.map((dateMonday: any) => {
-        /// date ngày thứ 2 hiện tại = ngày thứ 2 trong data
-        if (monday.getTime() === dateMonday.date) {
-          const date = dateMonday.date;
+      /// kiểm tra thứ 2 pick có tồn tại trong mảng data lấy về không
+      const isEmpty = checkDateExist(monday.getTime(), item.dateLearn);
 
-          if (item.dayOfWeek === 0) {
-            let dateSunday = addDay(date, 6).getTime();
-            !learnDates.includes(dateSunday)
-              ? learnDates.push(dateSunday)
-              : null;
-          } else {
-            let dateTime = addDay(date, item.dayOfWeek - 1).getTime();
-            !learnDates.includes(dateTime) ? learnDates.push(dateTime) : null;
-          }
+      console.log(item.dayOfWeek === 2 && item);
+      if (isEmpty) {
+        if (item.dayOfWeek === 0) {
+          let dateSunday = addDay(monday, 6).getTime();
+          !learnDates.includes(dateSunday) ? learnDates.push(dateSunday) : null;
+        } else {
+          let dateTime = addDay(monday, item.dayOfWeek - 1).getTime();
+          !learnDates.includes(dateTime) ? learnDates.push(dateTime) : null;
         }
-      });
+      }
     });
 
     return learnDates;
   }
+}
+
+function checkDateExist(date: any, data: any) {
+  return data.some((item: any) => item.date === date);
 }
 
 // Kiểm tra ngày tích có nằm trong các ngày học không
