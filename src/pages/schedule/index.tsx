@@ -46,7 +46,7 @@ const ScheduleScreen = () => {
   useAppSelector((state: any) => state.schedule.dataExtraction);
 
   // header
-  const [weekDays, setWeekDays] = useState(getListDays(getMonday(moment())));
+  const [weekDays, setWeekDays] = useState(getListDays(getMonday(new Date())));
   const [moveDate, setMoveDate] = useState(moment());
   const [dateLearn, setDateLearn] = useState();
 
@@ -58,6 +58,10 @@ const ScheduleScreen = () => {
     setWeekDays(getListDays(getMondayBeginWeek(weekDays[0])));
   }, [weekDays]);
 
+  const handleNextPress = useCallback(() => {
+    setWeekDays(getListDays(getMondayAfterWeek(weekDays[0])));
+  }, [weekDays]);
+
   const handleMoveDate = useCallback(
     dateActive => {
       setMoveDate(dateActive);
@@ -65,10 +69,6 @@ const ScheduleScreen = () => {
     },
     [weekDays],
   );
-
-  const handleNextPress = useCallback(() => {
-    setWeekDays(getListDays(getMondayAfterWeek(weekDays[0])));
-  }, [weekDays]);
 
   // main
   const [indexBtnActive, setIndexBtnActive] = useState(0);

@@ -22,7 +22,7 @@ const JoinNowScreen = ({navigation}: any) => {
 
   /// nếu có dữ liệu login => bóc tách
   useEffect(() => {
-    console.log(responseHTML);
+    // console.log(responseHTML);
     if (responseHTML) {
       extraction(responseHTML);
     }
@@ -65,20 +65,20 @@ const JoinNowScreen = ({navigation}: any) => {
   useEffect(() => {
     if (isPress) {
       if (dataExtraction.length > 0) {
-        console.log(dataExtraction);
+        // console.log(dataExtraction);
       } else {
         console.log('Sai mật khẩu');
       }
     }
   }, [dataExtraction]);
 
-  console.log('dataExtraction: ', dataExtraction);
+  // console.log('dataExtraction: ', dataExtraction);
 
   /// xử lý login
   function handleLogin() {
     setIsPress(true);
     handleGetData();
-    // navigation.navigate('bottom');
+    navigation.navigate('bottom');
   }
 
   function handleGetData() {

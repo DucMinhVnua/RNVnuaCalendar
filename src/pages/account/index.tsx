@@ -21,7 +21,7 @@ const AccountScreen = ({navigation}: any) => {
 
   // function handleFetchHtml() {
   //   const params = {
-  //     id: '637747',
+  //     id: 'cnp05',
   //   };
 
   //   dispatch(fetchDataHTML(params));

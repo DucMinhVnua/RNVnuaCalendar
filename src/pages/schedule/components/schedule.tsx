@@ -23,13 +23,14 @@ const Schedule = ({
   };
 
   function handleDayOfWeeks(index: any, item: any, weekDays: any) {
+    const weekDay = new Date(weekDays[index]);
+    weekDay.setHours(0, 0, 0, 0);
+
     if (moveDate?.toString() === weekDays[index].toString()) {
       return (
         <Text style={[typos.bodySmall, {color: colors.white}]}>{item}</Text>
       );
-    } else if (
-      dateLearn?.includes(moment(weekDays[index]).format('YYYY/MM/DD'))
-    ) {
+    } else if (dateLearn?.includes(weekDay.getTime())) {
       return (
         <Text style={[typos.bodySmall, {color: colors.colorFull07}]}>
           {item}
@@ -72,13 +73,12 @@ const Schedule = ({
                 backgroundColorActive,
             ]}>
             {handleDayOfWeeks(index, item, weekDays)}
-
             <Text
               style={[
                 typos.bodySmall,
                 {
                   color:
-                    getToday().toString() === weekDays[index].toString()
+                    getToday().getTime() === weekDays[index].getTime()
                       ? colors.buttonBg
                       : colors.bodyText,
                 },
