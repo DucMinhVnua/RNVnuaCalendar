@@ -8,17 +8,6 @@ import {enableScreens} from 'react-native-screens';
 enableScreens();
 
 /* ===== Screen component ===== */
-import WelcomeScreen from './src/pages/welcome';
-import AccountScreen from './src/pages/account';
-import {
-  AboutAppScreen,
-  InfoDetailScreen,
-  SupportScreen,
-} from './src/pages/account/scene';
-import {JoinNowScreen, LoginScreen} from './src/pages/login';
-import NewsScreen from './src/pages/news';
-import ScheduleScreen from './src/pages/schedule';
-import BottomNavigation from './src/navigation/bottomNavigation';
 import {NavigationContainer} from '@react-navigation/native';
 import AccountNavigation from './src/navigation/accountNavigation';
 

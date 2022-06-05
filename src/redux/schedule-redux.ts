@@ -4,7 +4,7 @@ import type {RootState} from '../store';
 import {
   convertSubjectSame,
   convertTextToNumberDay,
-  getLearnWeeks,
+  getLearnWeeksFromListWeek,
 } from '../util/schedule';
 const cheerio = require('react-native-cheerio');
 
@@ -63,7 +63,7 @@ export const scheduleSlice = createSlice({
                 startLearn: +col[9], // tiết bắt đầu
                 numberLesson: Number(col[10]), // số tiết học
                 room: col[11], // phòng học
-                dateLearn: getLearnWeeks('24/01/2022', col[13]), //ngày trong tuần phải học
+                dateLearn: getLearnWeeksFromListWeek('24/01/2022', col[13]), //ngày trong tuần phải học
               };
 
               dataConvert.push(dataHelpful);

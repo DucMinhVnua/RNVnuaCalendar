@@ -74,7 +74,6 @@ const JoinNowScreen = ({navigation}: any) => {
 
   // console.log('dataExtraction: ', dataExtraction);
 
-  /// xử lý login
   function handleLogin() {
     setIsPress(true);
     handleGetData();

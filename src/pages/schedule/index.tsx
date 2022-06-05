@@ -22,7 +22,7 @@ import {
 } from '../../redux/schedule-redux';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
 import {
-  filterDateLearnInWeek,
+  filterDayOfWeekFromData,
   filterMorningAfternoon,
   filterSubjectsDay,
 } from '../../util/schedule';
@@ -51,7 +51,7 @@ const ScheduleScreen = () => {
   const [dateLearn, setDateLearn] = useState();
 
   useEffect(() => {
-    setDateLearn(filterDateLearnInWeek(data, weekDays[0]));
+    setDateLearn(filterDayOfWeekFromData(data, weekDays[0]));
   }, [weekDays]);
 
   const handleBackPress = useCallback(() => {

@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 // Lấy thứ thứ 2 theo tuần --34567890--3
-export function getLearnWeeks(
+export function getLearnWeeksFromListWeek(
   dateStart = '24/01/2022',
   listWeek = '--34567890--3',
 ) {
@@ -66,13 +66,32 @@ export function filterMorningAfternoon(data: any) {
   };
 }
 
+// Kiểm tra ngày tích có nằm trong các ngày học không
+export function checkDate(date: any, data: any) {
+  let isCheck = true;
+  data.dateLearn.map((item: any, index: any) => {
+    const monday = new Date(item.date).getTime();
+    const sunday = addDay(monday, 6).getTime();
+    const dateOption = new Date(date);
+    dateOption.setHours(0, 0, 0, 0);
+
+    if (dateOption.getTime() >= monday && dateOption.getTime() <= sunday) {
+      console.log('Vào đây');
+      isCheck = false;
+    }
+  });
+
+  return isCheck;
+}
+
 // Lọc ra các dữ liệu có thứ bằng date đã chọn
 export function filterSubjectsDay(day: any, datas: any) {
   let subjectList: any = [];
 
   datas.forEach((data: any) => {
-    if (data.dayOfWeek === moment(day).day()) {
+    if (data.dayOfWeek === new Date(day).getDay()) {
       const isError = checkDate(day, data);
+      console.log(isError);
       if (!isError) {
         subjectList.push(data);
       }
@@ -83,7 +102,7 @@ export function filterSubjectsDay(day: any, datas: any) {
 }
 
 // input: thứ 2 tuần hiện tại, data extraction, output: những ngày có lịch học trong tuần
-export function filterDateLearnInWeek(data: any, monday: any) {
+export function filterDayOfWeekFromData(data: any, monday: any) {
   if (data.length > 0) {
     let learnDates: any = [];
 
@@ -94,7 +113,6 @@ export function filterDateLearnInWeek(data: any, monday: any) {
       /// kiểm tra thứ 2 pick có tồn tại trong mảng data lấy về không
       const isEmpty = checkDateExist(monday.getTime(), item.dateLearn);
 
-      console.log(item.dayOfWeek === 2 && item);
       if (isEmpty) {
         if (item.dayOfWeek === 0) {
           let dateSunday = addDay(monday, 6).getTime();
@@ -111,33 +129,9 @@ export function filterDateLearnInWeek(data: any, monday: any) {
 }
 
 function checkDateExist(date: any, data: any) {
-  return data.some((item: any) => item.date === date);
-}
-
-// Kiểm tra ngày tích có nằm trong các ngày học không
-export function checkDate(date: any, data: any) {
-  const sundayLast = getSundayLast(data.dateLearn);
-  const mondayFirst = getMondayFirst(data.dateLearn);
-
-  const dateOption = new Date(date);
-  dateOption.setHours(0, 0, 0, 0);
-
-  if (
-    dateOption.getTime() >= mondayFirst &&
-    dateOption.getTime() <= sundayLast
-  ) {
-    return false;
-  } else return true;
-}
-
-// Lấy chủ nhật cuối theo mảng dateLearn
-function getSundayLast(datas: any) {
-  return addDay(datas[datas.length - 1].date, 6).getTime();
-}
-
-// Lấy thứ 2 đầu tiên theo mảng dateLearn
-function getMondayFirst(data: any) {
-  return addDay(data[0].date, 0).getTime();
+  return data.some((item: any) => {
+    return item.date === date;
+  });
 }
 
 // Lọc dữ liệu trường hợp các tiết học trùng tiết

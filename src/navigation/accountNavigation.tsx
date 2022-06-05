@@ -10,6 +10,11 @@ import {
 import AccountScreen from '../pages/account';
 import BottomNavigation from './bottomNavigation';
 import LoginNavigation from './loginNavigation';
+import {
+  filterDayOfWeekFromData,
+  getLearnWeeksFromListWeek,
+} from '../util/schedule';
+import {useAppSelector} from '../hooks/hooks-redux';
 
 const AccountNavigation = () => {
   const Stack = createNativeStackNavigator();
