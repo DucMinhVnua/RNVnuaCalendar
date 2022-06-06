@@ -7,10 +7,10 @@ import colors from '../../assets/styles/colors';
 import Header from './components/header';
 import Main from './components/main';
 import Footer from './components/footer';
-import {pushDataExtraction} from '../../redux/account-redux';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
 import {removeValue} from '../../localStorage';
 import {_dataExtraction} from '../../constant/localKeys';
+import {pushDataExtraction} from '../../redux/schedule-redux';
 
 const AccountScreen = ({navigation}: any) => {
   const dispatch = useAppDispatch();
@@ -24,6 +24,7 @@ const AccountScreen = ({navigation}: any) => {
   }, [responseHTML]);
 
   async function handleLogout() {
+    dispatch(pushDataExtraction([]));
     await removeValue(_dataExtraction);
     navigation.navigate('JoinNow');
   }

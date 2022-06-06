@@ -1,15 +1,21 @@
 import axios from 'axios';
 
-export const callApi = async (endpoint: any, body = null) => {
+export const callApi = async (
+  endpoint: any,
+  method: any,
+  data: any,
+  isFormData = false,
+) => {
   const API_URL = 'http://daotao.vnua.edu.vn';
 
   var config = {
-    method: 'post',
+    method: method,
     url: `${API_URL}/${endpoint}`,
     headers: {
-      Cookie: 'ASP.NET_SessionId=v2owdk2xfdxrpleizzkwcsqi',
+      Cookie: 'ASP.NET_SessionId=lknhww55zatp1einjm4gbuzw',
+      'Content-type': isFormData ? 'multipart/form-data' : '',
     },
-    data: body,
+    data: data,
   };
 
   return axios(config)

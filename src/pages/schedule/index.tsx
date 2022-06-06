@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert, ActivityIndicator} from 'react-native';
 
 import colors from '../../assets/styles/colors';
 import {NORMAL_PADDING} from '../../assets/styles/scale';
@@ -10,40 +10,121 @@ import {
   getMondayAfterWeek,
   getMondayBeginWeek,
 } from '../../util/time';
-import {postAPI} from '../../api/lectureSchedule-api';
 
 // Components
 import Header from './components/header';
 import Main from './components/main';
 import {
   pushDataExtraction,
-  fetchDataHTML,
   pushDataMorningAfternoon,
 } from '../../redux/schedule-redux';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
 import {
+  convertTextToNumberDay,
   filterDayOfWeekFromData,
   filterMorningAfternoon,
   filterSubjectsDay,
+  getLearnWeeksFromListWeek,
 } from '../../util/schedule';
+import {callApi} from '../../api/lectureSchedule-api';
+import {retrieve} from '../../localStorage';
+import {_dataExtraction} from '../../constant/localKeys';
 
-const ScheduleScreen = () => {
+const cheerio = require('react-native-cheerio');
+
+const ScheduleScreen = ({responseHTML}: any) => {
   // api
   const dispatch = useAppDispatch();
-  const responseHTML = useAppSelector(state => state.schedule.responseHTML);
   const data = useAppSelector(state => state.schedule.dataExtraction);
+  const code = useAppSelector(state => state.login.code);
 
-  useEffect(() => {
-    if (responseHTML) {
-      extraction(responseHTML);
-    }
-  }, [responseHTML]);
+  async function getHtmlData(params: any) {
+    var formData = new FormData();
 
-  function extraction(data: any) {
-    dispatch(pushDataExtraction(data));
+    formData.append(
+      '__EVENTTARGET',
+      'ctl00$ContentPlaceHolder1$ctl00$rad_ThuTiet',
+    );
+    formData.append(
+      'ctl00$ContentPlaceHolder1$ctl00$rad_ThuTiet',
+      'rad_ThuTiet',
+    );
+
+    return await callApi(
+      `default.aspx?page=thoikhoabieu&sta=1&id=${params.userId}`,
+      'post',
+      formData,
+      true,
+    );
   }
 
-  useAppSelector((state: any) => state.schedule.dataExtraction);
+  async function handleGetData(params: any) {
+    const htmlData = await getHtmlData(params);
+    return htmlData;
+  }
+
+  async function handleExtraction(htmlData: any) {
+    if (htmlData !== '') {
+      if (
+        htmlData?.includes(
+          `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau 15 phút!');}</script></form>`,
+        )
+      ) {
+        /// trả về dữ liệu trên local
+        const retrieveData = await retrieve(_dataExtraction);
+        return retrieveData;
+      } else {
+        let id = 0;
+        let $ = cheerio.load(htmlData);
+        let col: any = [];
+        let dataConvert: any = [];
+        // get many table element
+        $('.grid-roll2 > table').each((index: any, elm: any) => {
+          $ = cheerio.load(elm);
+
+          // get many td elm in table elm
+          $('tbody > tr > td').each(function (i: any, e: any) {
+            let textElementTd = $(e).text();
+
+            // DSSV is td element tail
+            if (textElementTd.includes('DSSV')) {
+              // get td text element helpful
+              const dataHelpful = {
+                id: id++,
+                code: col[0], // mã môn học
+                nameSubject: col[1], // tên môn học
+                group: col[2], // nhóm môn học
+                numberCredit: col[3], // số tín chỉ
+                dayOfWeek: convertTextToNumberDay(col[8]), // ngày học trong tuần
+                startLearn: +col[9], // tiết bắt đầu
+                numberLesson: Number(col[10]), // số tiết học
+                room: col[11], // phòng học
+                dateLearn: getLearnWeeksFromListWeek('24/01/2022', col[13]), //ngày trong tuần phải học
+              };
+
+              dataConvert.push(dataHelpful);
+              col = [];
+            } else {
+              col.push(textElementTd);
+            }
+          });
+        });
+
+        return dataConvert;
+      }
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      const htmlData = await handleGetData(code);
+
+      /// bóc tách dữ liệu
+      const dataExtraction = await handleExtraction(htmlData);
+
+      dispatch(pushDataExtraction(dataExtraction));
+    })();
+  }, []);
 
   // header
   const [weekDays, setWeekDays] = useState(getListDays(getMonday(new Date())));
@@ -52,7 +133,7 @@ const ScheduleScreen = () => {
 
   useEffect(() => {
     setDateLearn(filterDayOfWeekFromData(data, weekDays[0]));
-  }, [weekDays]);
+  }, [weekDays, data]);
 
   const handleBackPress = useCallback(() => {
     setWeekDays(getListDays(getMondayBeginWeek(weekDays[0])));
@@ -91,24 +172,34 @@ const ScheduleScreen = () => {
       dispatch(pushDataMorningAfternoon(dataMorningAfternoon));
     }
   }, [data, moveDate]);
+
   return (
     <View style={styles.container}>
-      {/* Ngày học trong tuần */}
-      <Header
-        weekDays={weekDays}
-        handleBackPress={handleBackPress}
-        handleNextPress={handleNextPress}
-        handleMoveDate={handleMoveDate}
-        moveDate={moveDate}
-        dateLearn={dateLearn}
-      />
+      {data.length > 0 ? (
+        <>
+          {/* lịch học */}
+          <Header
+            weekDays={weekDays}
+            handleBackPress={handleBackPress}
+            handleNextPress={handleNextPress}
+            handleMoveDate={handleMoveDate}
+            moveDate={moveDate}
+            dateLearn={dateLearn}
+          />
 
-      {/* Danh sách tiết học */}
-      <Main
-        indexBtnActive={indexBtnActive}
-        handleBtnMorning={handleBtnMorning}
-        handleBtnAfternoon={handleBtnAfternoon}
-      />
+          {/* Danh sách tiết học */}
+          <Main
+            indexBtnActive={indexBtnActive}
+            handleBtnMorning={handleBtnMorning}
+            handleBtnAfternoon={handleBtnAfternoon}
+          />
+        </>
+      ) : (
+        <View
+          style={{flexGrow: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator />
+        </View>
+      )}
     </View>
   );
 };

@@ -76,7 +76,6 @@ export function checkDate(date: any, data: any) {
     dateOption.setHours(0, 0, 0, 0);
 
     if (dateOption.getTime() >= monday && dateOption.getTime() <= sunday) {
-      console.log('Vào đây');
       isCheck = false;
     }
   });
@@ -91,7 +90,6 @@ export function filterSubjectsDay(day: any, datas: any) {
   datas.forEach((data: any) => {
     if (data.dayOfWeek === new Date(day).getDay()) {
       const isError = checkDate(day, data);
-      console.log(isError);
       if (!isError) {
         subjectList.push(data);
       }
