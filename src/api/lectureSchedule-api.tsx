@@ -1,21 +1,22 @@
-import {URL_BASE} from '.';
+import axios from 'axios';
 
-export async function postAPI(url: string, body: any) {
-  var myHeaders = new Headers();
-  myHeaders.append('Cookie', 'ASP.NET_SessionId=wr3r1smhn4qtmd452lprf1jy');
-  myHeaders.append('Content-type', 'multipart/form-data');
+export const callApi = async (endpoint: any, body = null) => {
+  const API_URL = 'http://daotao.vnua.edu.vn';
 
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: body,
-    redirect: 'follow',
+  var config = {
+    method: 'post',
+    url: `${API_URL}/${endpoint}`,
+    headers: {
+      Cookie: 'ASP.NET_SessionId=v2owdk2xfdxrpleizzkwcsqi',
+    },
+    data: body,
   };
 
-  // console.log('Đây là đường dẫn: ', url);
-
-  return await fetch(`${URL_BASE}/${url}`, requestOptions)
-    .then(response => response.text())
-    .then(result => result)
-    .catch(e => console.log('Lỗi call api trong postAPI: ', e));
-}
+  return axios(config)
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};

@@ -7,25 +7,15 @@ import colors from '../../assets/styles/colors';
 import Header from './components/header';
 import Main from './components/main';
 import Footer from './components/footer';
-import {fetchDataHTML, pushDataExtraction} from '../../redux/account-redux';
+import {pushDataExtraction} from '../../redux/account-redux';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
+import {removeValue} from '../../localStorage';
+import {_dataExtraction} from '../../constant/localKeys';
 
 const AccountScreen = ({navigation}: any) => {
   const dispatch = useAppDispatch();
   const responseHTML = useAppSelector(state => state.account.responseHTML);
   const data = useAppSelector(state => state.account.dataExtraction);
-
-  // useEffect(() => {
-  //   handleFetchHtml();
-  // }, [responseHTML]);
-
-  // function handleFetchHtml() {
-  //   const params = {
-  //     id: 'cnp05',
-  //   };
-
-  //   dispatch(fetchDataHTML(params));
-  // }
 
   useEffect(() => {
     if (responseHTML) {
@@ -33,7 +23,8 @@ const AccountScreen = ({navigation}: any) => {
     }
   }, [responseHTML]);
 
-  function handleLogout() {
+  async function handleLogout() {
+    await removeValue(_dataExtraction);
     navigation.navigate('JoinNow');
   }
 

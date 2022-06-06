@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Alert} from 'react-native';
 import {postAPI} from '../api/lectureSchedule-api';
 import type {RootState} from '../store';
 import {
@@ -8,24 +9,12 @@ import {
 } from '../util/schedule';
 const cheerio = require('react-native-cheerio');
 
-// thunk
-export const fetchDataHTML = createAsyncThunk(
-  'schedule/fetchDataHTML',
-  async (params: any, thunkAPI) => {
-    const response = await postAPI(
-      `default.aspx?page=thoikhoabieu&sta=1&id=${params.userId}`,
-      params.body,
-    );
-    return response;
-  },
-);
-
 // Define the initial state using that type
 const initialState: any = {
   responseHTML: '',
   dataExtraction: [],
   dataMorningAfterOfDay: {},
-  errorServer: false,
+  isErrorSever: false,
 };
 
 export const scheduleSlice = createSlice({
@@ -39,9 +28,6 @@ export const scheduleSlice = createSlice({
       let col: any = [];
       let dataConvert: any = [];
       if ($('.grid-roll2 > table').html()) {
-        /// lỗi trên server
-        state.errorServer = false;
-
         // get many table element
         $('.grid-roll2 > table').each((index: any, elm: any) => {
           $ = cheerio.load(elm);
@@ -74,22 +60,20 @@ export const scheduleSlice = createSlice({
           });
         });
       } else {
-        console.log('server đang lỗi');
-        state.errorServer = true;
+        $('.base > table > tbody > tr').each((index: any, elm: any) => {
+          const trElem = cheerio.load(elm);
+          if (trElem('td').attr('valign') === 'top') {
+            if (trElem('td').text().trim() === '') {
+              Alert.alert('Server đang bảo trì vui lòng thử lại sau');
+            }
+          }
+        });
       }
-
       state.dataExtraction = dataConvert;
     },
     pushDataMorningAfternoon: (state, action) => {
       state.dataMorningAfterOfDay = convertSubjectSame(action.payload);
     },
-  },
-  extraReducers: builder => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(fetchDataHTML.fulfilled, (state: any, action: any) => {
-      // Add user to the state array
-      state.responseHTML = action.payload;
-    });
   },
 });
 
