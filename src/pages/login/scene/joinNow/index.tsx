@@ -1,5 +1,11 @@
-import {Alert, StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  BackHandler,
+  StyleSheet,
+  View,
+} from 'react-native';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 
 /* ===== components ===== */
 import Header from './components/header';
@@ -22,6 +28,30 @@ import {saveCode} from '../../../../redux/login-redux';
 const cheerio = require('react-native-cheerio');
 
 const JoinNowScreen = ({navigation, route}: any) => {
+  const [isLoading, setLoading] = useState(false);
+
+  // useLayoutEffect(() => {
+  //   (async () => {
+  //     const dataLocal = await retrieve(_dataExtraction);
+
+  //     if (dataLocal) {
+  //       if (dataLocal.length > 0) {
+  //         navigation.push('bottom');
+  //       }
+  //     } else {
+  //       setLoading(false);
+  //     }
+  //   })();
+  // }, []);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => backHandler.remove();
+  }, []);
+
   const dispatch = useAppDispatch();
 
   /// giá trị input code
@@ -49,10 +79,10 @@ const JoinNowScreen = ({navigation, route}: any) => {
     if (htmlData !== '') {
       if (
         htmlData?.includes(
-          `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau 15 phút!');}</script></form>`,
+          `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau!');}</script></form>`,
         )
       ) {
-        Alert.alert('Server đang bảo trì vui lòng thử lại sau');
+        Alert.alert('Server đang bảo trì!');
 
         /// trả về dữ liệu trên local
         const retrieveData = await retrieve(_dataExtraction);
@@ -114,29 +144,43 @@ const JoinNowScreen = ({navigation, route}: any) => {
       /// push store
       // await storeData(_dataExtraction, dataExtraction);
 
-      if (dataExtraction.length > 0) {
-        dispatch(saveCode(value.trim()));
-        navigation.push('bottom');
+      console.log(typeof dataExtraction);
+      if (typeof dataExtraction !== 'undefined') {
+        if (dataExtraction.length > 0) {
+          dispatch(saveCode(value.trim()));
+          navigation.push('bottom');
+        } else {
+          Alert.alert('Vui lòng nhập lại mã!');
+        }
       } else {
-        Alert.alert('Vui lòng nhập lại mã');
+        Alert.alert('Chưa có dữ liệu cũ!');
       }
     }
   }
 
   return (
-    <KeyboardAwareScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.container}>
-      <View style={styles.wrapperHeader}>
-        <Header />
-      </View>
-      <View style={styles.wrapperMain}>
-        <Main value={value} onChangeText={onChangeText} />
-      </View>
-      <View style={styles.wrapperFooter}>
-        <Footer handleLogin={handleLogin} />
-      </View>
-    </KeyboardAwareScrollView>
+    <>
+      {isLoading ? (
+        <View
+          style={{alignItems: 'center', justifyContent: 'center', flexGrow: 1}}>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        <KeyboardAwareScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.container}>
+          <View style={styles.wrapperHeader}>
+            <Header />
+          </View>
+          <View style={styles.wrapperMain}>
+            <Main value={value} onChangeText={onChangeText} />
+          </View>
+          <View style={styles.wrapperFooter}>
+            <Footer handleLogin={handleLogin} />
+          </View>
+        </KeyboardAwareScrollView>
+      )}
+    </>
   );
 };
 

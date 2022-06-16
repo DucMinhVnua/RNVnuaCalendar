@@ -67,7 +67,7 @@ const ScheduleScreen = ({responseHTML}: any) => {
     if (htmlData !== '') {
       if (
         htmlData?.includes(
-          `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau 15 phút!');}</script></form>`,
+          `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau!');}</script></form>`,
         )
       ) {
         /// trả về dữ liệu trên local

@@ -17,6 +17,8 @@ const AccountScreen = ({navigation}: any) => {
   const responseHTML = useAppSelector(state => state.account.responseHTML);
   const data = useAppSelector(state => state.account.dataExtraction);
 
+  console.log(data);
+
   useEffect(() => {
     if (responseHTML) {
       dispatch(pushDataExtraction(responseHTML));
@@ -25,7 +27,7 @@ const AccountScreen = ({navigation}: any) => {
 
   async function handleLogout() {
     dispatch(pushDataExtraction([]));
-    await removeValue(_dataExtraction);
+    // await removeValue(_dataExtraction);
     navigation.navigate('JoinNow');
   }
 
