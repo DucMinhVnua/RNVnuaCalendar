@@ -45,6 +45,9 @@ const BottomSheetLesson = ({
             closeOnDragDown={true}
             closeOnPressMask={true}
             customStyles={{
+              container: {
+                height: 400,
+              },
               wrapper: {
                 backgroundColor: 'rgba(0,0,0,.6)',
               },
@@ -93,6 +96,9 @@ const BottomSheetLesson = ({
           closeOnDragDown={true}
           closeOnPressMask={true}
           customStyles={{
+            container: {
+              height: 400,
+            },
             wrapper: {
               backgroundColor: 'rgba(0,0,0,.6)',
             },

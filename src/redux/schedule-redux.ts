@@ -14,7 +14,7 @@ export const scheduleSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    pushDataExtraction: (state, action) => {
+    dataExt: (state, action) => {
       state.dataExtraction = action.payload;
     },
     pushDataMorningAfternoon: (state, action) => {
@@ -23,7 +23,6 @@ export const scheduleSlice = createSlice({
   },
 });
 
-export const {pushDataExtraction, pushDataMorningAfternoon} =
-  scheduleSlice.actions;
+export const {dataExt, pushDataMorningAfternoon} = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

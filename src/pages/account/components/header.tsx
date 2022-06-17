@@ -31,12 +31,12 @@ const Header = ({data, navigation}: any) => {
           }}
           style={styles.wrapperName}
           activeOpacity={0.8}>
-          <Text style={styles.name}>{data.name}</Text>
+          <Text style={styles.name}>{data?.name}</Text>
           <View style={styles.wrapperIconName}>
             <icons.DoubleArrowRightIcon />
           </View>
         </TouchableOpacity>
-        <Text style={styles.major}>{data.myClass}</Text>
+        <Text style={styles.major}>{data?.myClass}</Text>
       </View>
     </View>
   );

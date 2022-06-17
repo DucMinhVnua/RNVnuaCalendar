@@ -26,20 +26,24 @@ const Main = ({data}: any) => {
             nameInfo={data?.name.trim()}
           />
         </View>
-        <View style={styles.wrapperItemInfo}>
-          <ItemInfo
-            label="Ngày sinh"
-            IconInfo={icons.CalendarGrayIcon}
-            nameInfo={data?.birthDay}
-          />
-        </View>
-        <View style={styles.wrapperItemInfo}>
-          <ItemInfo
-            label="Lớp học"
-            IconInfo={icons.BookGrayIcon}
-            nameInfo={data?.myClass}
-          />
-        </View>
+        {data?.birthDay && (
+          <View style={styles.wrapperItemInfo}>
+            <ItemInfo
+              label="Ngày sinh"
+              IconInfo={icons.CalendarGrayIcon}
+              nameInfo={data?.birthDay}
+            />
+          </View>
+        )}
+        {data?.myClass && (
+          <View style={styles.wrapperItemInfo}>
+            <ItemInfo
+              label="Lớp học"
+              IconInfo={icons.BookGrayIcon}
+              nameInfo={data?.myClass}
+            />
+          </View>
+        )}
       </View>
     </ScrollView>
   );

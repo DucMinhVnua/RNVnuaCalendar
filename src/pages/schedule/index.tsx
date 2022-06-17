@@ -30,101 +30,10 @@ import {callApi} from '../../api/lectureSchedule-api';
 import {retrieve} from '../../localStorage';
 import {_dataExtraction} from '../../constant/localKeys';
 
-const cheerio = require('react-native-cheerio');
-
 const ScheduleScreen = ({responseHTML}: any) => {
   // api
   const dispatch = useAppDispatch();
   const data = useAppSelector(state => state.schedule.dataExtraction);
-  const code = useAppSelector(state => state.login.code);
-
-  async function getHtmlData(params: any) {
-    var formData = new FormData();
-
-    formData.append(
-      '__EVENTTARGET',
-      'ctl00$ContentPlaceHolder1$ctl00$rad_ThuTiet',
-    );
-    formData.append(
-      'ctl00$ContentPlaceHolder1$ctl00$rad_ThuTiet',
-      'rad_ThuTiet',
-    );
-
-    return await callApi(
-      `default.aspx?page=thoikhoabieu&sta=1&id=${params.userId}`,
-      'post',
-      formData,
-      true,
-    );
-  }
-
-  async function handleGetData(params: any) {
-    const htmlData = await getHtmlData(params);
-    return htmlData;
-  }
-
-  async function handleExtraction(htmlData: any) {
-    if (htmlData !== '') {
-      if (
-        htmlData?.includes(
-          `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau 15 phút!');}</script></form>`,
-        )
-      ) {
-        /// trả về dữ liệu trên local
-        const retrieveData = await retrieve(_dataExtraction);
-        return retrieveData;
-      } else {
-        let id = 0;
-        let $ = cheerio.load(htmlData);
-        let col: any = [];
-        let dataConvert: any = [];
-        // get many table element
-        $('.grid-roll2 > table').each((index: any, elm: any) => {
-          $ = cheerio.load(elm);
-
-          // get many td elm in table elm
-          $('tbody > tr > td').each(function (i: any, e: any) {
-            let textElementTd = $(e).text();
-
-            // DSSV is td element tail
-            if (textElementTd.includes('DSSV')) {
-              // get td text element helpful
-              const dataHelpful = {
-                id: id++,
-                code: col[0], // mã môn học
-                nameSubject: col[1], // tên môn học
-                group: col[2], // nhóm môn học
-                numberCredit: col[3], // số tín chỉ
-                dayOfWeek: convertTextToNumberDay(col[8]), // ngày học trong tuần
-                startLearn: +col[9], // tiết bắt đầu
-                numberLesson: Number(col[10]), // số tiết học
-                room: col[11], // phòng học
-                dateLearn: getLearnWeeksFromListWeek('24/01/2022', col[13]), //ngày trong tuần phải học
-              };
-
-              dataConvert.push(dataHelpful);
-              col = [];
-            } else {
-              col.push(textElementTd);
-            }
-          });
-        });
-
-        return dataConvert;
-      }
-    }
-  }
-
-  useEffect(() => {
-    (async () => {
-      const htmlData = await handleGetData(code);
-
-      /// bóc tách dữ liệu
-      const dataExtraction = await handleExtraction(htmlData);
-
-      dispatch(pushDataExtraction(dataExtraction));
-    })();
-  }, []);
 
   // header
   const [weekDays, setWeekDays] = useState(getListDays(getMonday(new Date())));
