@@ -57,7 +57,9 @@ const LectureScheduleItem = ({item, index, indexBtnActive}: any) => {
           <View style={styles.wrapperRight}>
             <View style={styles.wrapperInfo}>
               <icons.BookGrayIcon />
-              <Text style={styles.content}>{subjects.nameSubject}</Text>
+              <Text style={styles.content} numberOfLines={1}>
+                {subjects.nameSubject}
+              </Text>
             </View>
             <View style={styles.wrapperInfo}>
               <icons.RoomScheduleIcon />
@@ -95,6 +97,7 @@ const styles = StyleSheet.create({
     ...typos.titleSmall,
   },
   wrapperRight: {
+    width: '50%',
     flexGrow: 1,
     backgroundColor: colors.white,
     padding: moderateScale(16),
@@ -106,7 +109,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   wrapperInfo: {
-    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },

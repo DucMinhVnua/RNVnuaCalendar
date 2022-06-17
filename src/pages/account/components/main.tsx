@@ -112,11 +112,11 @@ const Main = ({navigation}: any) => {
         IconLeft={icons.VersionIcon}
         nameFunction="Phiên bản"
       />
-      <FunctionsAccount
+      {/* <FunctionsAccount
         IconLeft={icons.AsyncIcon}
         nameFunction="Đồng bộ"
         onPress={handleAsync}
-      />
+      /> */}
     </View>
   );
 };

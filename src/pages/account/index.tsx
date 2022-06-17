@@ -9,7 +9,11 @@ import Main from './components/main';
 import Footer from './components/footer';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks-redux';
 import {removeValue, retrieve, storeData} from '../../localStorage';
-import {_dataAccount, _dataExtraction} from '../../constant/localKeys';
+import {
+  _codeApp,
+  _dataAccount,
+  _dataExtraction,
+} from '../../constant/localKeys';
 import {dataExt} from '../../redux/schedule-redux';
 import {getAPI} from '../../api/account-api';
 import {
@@ -23,8 +27,6 @@ const cheerio = require('react-native-cheerio');
 const AccountScreen = ({navigation}: any) => {
   const dispatch = useAppDispatch();
 
-  const code = useAppSelector(state => state.login.code);
-
   const fetchDataHtml = async (code: any) => {
     return await getAPI(`Default.aspx?page=thoikhoabieu&sta=1&id=${code}`);
   };
@@ -32,7 +34,7 @@ const AccountScreen = ({navigation}: any) => {
   const dataExtraction = async (dataHtml: any, maCode: any) => {
     if (
       dataHtml?.includes(
-        `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau 15 phút!');}</script></form>`,
+        `<script language="JavaScript">window.onload=function(){alert('Server đang tải lại dữ liệu. Vui lòng trở lại sau!');}</script></form>`,
       )
     ) {
       /// trả về dữ liệu trên local
@@ -86,21 +88,34 @@ const AccountScreen = ({navigation}: any) => {
 
   useEffect(() => {
     (async () => {
-      const dataHtml = await fetchDataHtml(code);
-      const dataExt = await dataExtraction(dataHtml, code);
+      const codeLocal = await retrieve(_codeApp);
 
-      // đẩy dữ liệu lên local
-      await storeData(_dataAccount, dataExt);
+      if (codeLocal) {
+        const dataHtml = await fetchDataHtml(codeLocal);
+        const dataExt = await dataExtraction(dataHtml, codeLocal);
 
-      setData(dataExt);
+        // đẩy dữ liệu lên local
+        await storeData(_dataAccount, dataExt);
+
+        setData(dataExt);
+      }
     })();
   }, []);
 
   async function handleLogout() {
     dispatch(dataExt([]));
+
+    //mã sinh viên redux
     dispatch(saveCode(''));
+
+    // local dữ liệu schedule
     await removeValue(_dataExtraction);
+
+    // local dữ liệu thông tin
     await removeValue(_dataAccount);
+
+    // local dữ liệu mã sinh viên
+    await removeValue(_codeApp);
     navigation.navigate('JoinNow');
   }
 

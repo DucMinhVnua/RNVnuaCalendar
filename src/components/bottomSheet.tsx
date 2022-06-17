@@ -33,7 +33,9 @@ const BottomSheetLesson = ({
           <View style={[styles.wrapperRight, {marginBottom: 5}]}>
             <View style={styles.wrapperInfo}>
               <icons.BookGrayIcon />
-              <Text style={styles.content}>{subjects.nameSubject}</Text>
+              <Text style={styles.content} numberOfLines={1}>
+                {subjects.nameSubject}
+              </Text>
             </View>
             <View style={styles.wrapperInfo}>
               <icons.RoomScheduleIcon />
@@ -149,7 +151,18 @@ export default BottomSheetLesson;
 
 const styles = StyleSheet.create({
   wrapperRight: {
-    flexGrow: 1,
+    wrapperRight: {
+      width: '50%',
+      flexGrow: 1,
+      backgroundColor: colors.white,
+      padding: moderateScale(16),
+
+      shadowColor: '#000',
+      shadowOffset: {width: 0, height: 1},
+      shadowOpacity: 0.4,
+      shadowRadius: 3,
+      elevation: 5,
+    },
     backgroundColor: colors.white,
     padding: moderateScale(16),
 
@@ -160,7 +173,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   wrapperInfo: {
-    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },

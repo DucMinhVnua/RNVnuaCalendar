@@ -18,6 +18,8 @@ export const callApi = async (
     data: data,
   };
 
+  console.log(config);
+
   return axios(config)
     .then(function (response) {
       return response.data;

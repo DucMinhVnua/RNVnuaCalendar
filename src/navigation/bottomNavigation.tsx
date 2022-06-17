@@ -87,7 +87,7 @@ const BottomNavigation = () => {
                   color: 'white',
                   fontSize: focused ? 14 : 12,
                 }}>
-                Tài khoản
+                Thông tin
               </Text>
             </View>
           ),
