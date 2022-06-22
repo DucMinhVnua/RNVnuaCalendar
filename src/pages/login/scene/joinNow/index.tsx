@@ -253,7 +253,8 @@ const JoinNowScreen = ({navigation, route}: any) => {
           Alert.alert('Vui lòng nhập lại mã!');
         }
       } else {
-        Alert.alert('Chưa có dữ liệu cũ!');
+        Alert.alert('Chưa có dữ liệu!');
+        Alert.alert('Server đang bảo trì!');
       }
     }
   }

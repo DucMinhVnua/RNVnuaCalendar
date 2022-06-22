@@ -1,4 +1,4 @@
-import {StyleSheet, View, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, ActivityIndicator, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import colors from '../../assets/styles/colors';
@@ -86,6 +86,10 @@ const AccountScreen = ({navigation}: any) => {
 
   const [data, setData] = useState();
 
+  async function pushDataLocal(dataExtraction: any) {
+    return await storeData(_dataAccount, dataExtraction);
+  }
+
   useEffect(() => {
     (async () => {
       const codeLocal = await retrieve(_codeApp);
@@ -94,10 +98,17 @@ const AccountScreen = ({navigation}: any) => {
         const dataHtml = await fetchDataHtml(codeLocal);
         const dataExt = await dataExtraction(dataHtml, codeLocal);
 
-        // đẩy dữ liệu lên local
-        await storeData(_dataAccount, dataExt);
-
-        setData(dataExt);
+        if (typeof dataExt !== 'undefined') {
+          if (dataExt.length > 0) {
+            pushDataLocal(dataExt);
+            setData(dataExt);
+          } else {
+            Alert.alert('Vui lòng nhập lại mã!');
+          }
+        } else {
+          Alert.alert('Chưa có dữ liệu!');
+          Alert.alert('Server đang bảo trì!');
+        }
       }
     })();
   }, []);

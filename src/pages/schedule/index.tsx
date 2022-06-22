@@ -24,7 +24,7 @@ import {
   getLearnWeeksFromListWeek,
 } from '../../util/schedule';
 import {callApi} from '../../api/lectureSchedule-api';
-import {retrieve} from '../../localStorage';
+import {retrieve, storeData} from '../../localStorage';
 import {_codeApp, _dataExtraction} from '../../constant/localKeys';
 
 const cheerio = require('react-native-cheerio');
@@ -129,8 +129,6 @@ const ScheduleScreen = ({responseHTML}: any) => {
       'post',
       '',
     );
-
-    console.log(htmlData);
 
     if (htmlData !== '') {
       if (
@@ -257,28 +255,34 @@ const ScheduleScreen = ({responseHTML}: any) => {
     }
   }
 
+  async function pushDataLocal(dataExtraction: any) {
+    return await storeData(_dataExtraction, dataExtraction);
+  }
+
   useEffect(() => {
     (async () => {
       const codeLocal = await retrieve(_codeApp);
 
       if (codeLocal) {
-        console.log('codeLocal', codeLocal);
         const htmlData = await handleGetData(codeLocal);
 
         /// bóc tách dữ liệu
         const dataExtraction = await handleExtraction(htmlData, codeLocal);
 
-        console.log(dataExtraction);
-
-        setData(dataExtraction);
+        if (typeof dataExtraction !== 'undefined') {
+          if (dataExtraction.length > 0) {
+            pushDataLocal(dataExtraction);
+            setData(dataExtraction);
+          } else {
+            Alert.alert('Vui lòng nhập lại mã!');
+          }
+        } else {
+          Alert.alert('Chưa có dữ liệu!');
+          Alert.alert('Server đang bảo trì!');
+        }
       }
     })();
   }, []);
-
-  console.log(
-    'Data: =================================================================== ',
-    data,
-  );
 
   return (
     <View style={styles.container}>
