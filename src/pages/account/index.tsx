@@ -98,8 +98,10 @@ const AccountScreen = ({navigation}: any) => {
         const dataHtml = await fetchDataHtml(codeLocal);
         const dataExt = await dataExtraction(dataHtml, codeLocal);
 
+        console.log(dataExt);
+
         if (typeof dataExt !== 'undefined') {
-          if (dataExt.length > 0) {
+          if (Object.keys(dataExt).length > 0) {
             pushDataLocal(dataExt);
             setData(dataExt);
           } else {
