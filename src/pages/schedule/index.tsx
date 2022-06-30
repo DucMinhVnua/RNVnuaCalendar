@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, StyleSheet, Alert, ActivityIndicator} from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 
 import colors from '../../assets/styles/colors';
 import {NORMAL_PADDING} from '../../assets/styles/scale';
@@ -282,6 +283,34 @@ const ScheduleScreen = ({responseHTML}: any) => {
         }
       }
     })();
+  }, []);
+
+  useEffect(() => {
+    NetInfo.fetch().then(state => {
+      if (!state.isConnected) {
+        Alert.alert('Mất kết nối mạng!');
+
+        (async () => {
+          const codeLocal = await retrieve(_codeApp);
+
+          if (codeLocal) {
+            /// trả về dữ liệu trên local
+            const retrieveData = await retrieve(_dataExtraction);
+
+            if (typeof retrieveData !== 'undefined') {
+              if (retrieveData.length > 0) {
+                pushDataLocal(retrieveData);
+                setData(retrieveData);
+              } else {
+                Alert.alert('Vui lòng nhập lại mã!');
+              }
+            } else {
+              Alert.alert('Chưa có dữ liệu!');
+            }
+          }
+        })();
+      }
+    });
   }, []);
 
   return (

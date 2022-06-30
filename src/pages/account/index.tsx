@@ -1,5 +1,6 @@
 import {StyleSheet, View, ActivityIndicator, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import NetInfo from '@react-native-community/netinfo';
 
 import colors from '../../assets/styles/colors';
 
@@ -98,8 +99,6 @@ const AccountScreen = ({navigation}: any) => {
         const dataHtml = await fetchDataHtml(codeLocal);
         const dataExt = await dataExtraction(dataHtml, codeLocal);
 
-        console.log(dataExt);
-
         if (typeof dataExt !== 'undefined') {
           if (Object.keys(dataExt).length > 0) {
             pushDataLocal(dataExt);
@@ -113,6 +112,34 @@ const AccountScreen = ({navigation}: any) => {
         }
       }
     })();
+  }, []);
+
+  useEffect(() => {
+    NetInfo.fetch().then(state => {
+      if (!state.isConnected) {
+        Alert.alert('Mất kết nối mạng!');
+
+        (async () => {
+          const codeLocal = await retrieve(_codeApp);
+
+          if (codeLocal) {
+            /// trả về dữ liệu trên local
+            const retrieveData = await retrieve(_dataAccount);
+
+            if (typeof retrieveData !== 'undefined') {
+              if (Object.keys(retrieveData).length > 0) {
+                pushDataLocal(retrieveData);
+                setData(retrieveData);
+              } else {
+                Alert.alert('Vui lòng nhập lại mã!');
+              }
+            } else {
+              Alert.alert('Chưa có dữ liệu!');
+            }
+          }
+        })();
+      }
+    });
   }, []);
 
   async function handleLogout() {
